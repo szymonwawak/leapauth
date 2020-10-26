@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NavigatorConfig} from '../../models/navigator-config';
 import {NavigationService} from '../../../core/services/navigation.service';
 import {Direction} from '../../../core/enums/direction.enum';
-import {Subject} from "rxjs";
-import {ServiceInjector} from "../../../core/classes/service-injector";
+import {Subject} from 'rxjs';
+import {ServiceInjector} from '../../../core/classes/service-injector';
 
 @Component({
   selector: 'app-navigator',
@@ -15,6 +15,7 @@ export class NavigatorComponent implements OnInit {
   public config: NavigatorConfig = {top: '', right: '', down: '', left: ''};
   private configObservable: Subject<NavigatorConfig>;
   private navigationService: NavigationService;
+  private detectGesture = true;
 
   constructor() {
     this.navigationService = ServiceInjector.injector.get(NavigationService);
@@ -30,7 +31,11 @@ export class NavigatorComponent implements OnInit {
     const controller = Leap.loop({enableGestures: true}, () => {
     });
     controller.on('gesture', (gesture) => {
-      if (gesture.type === 'swipe') {
+      if (gesture.type === 'swipe' && this.detectGesture) {
+        this.detectGesture = false;
+        setTimeout(() => {
+          this.detectGesture = true;
+        }, 500);
         const direction = this.getSwipeDirection(gesture);
         this.navigationService.setSwipeDirection(direction);
       }

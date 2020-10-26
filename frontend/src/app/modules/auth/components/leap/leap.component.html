@@ -1,0 +1,7 @@
+<div class="row justify-content-around align-items-center app-wrapper">
+  <div class="col-4">
+    <app-person-select (isUserChosen)="onUserSelection($event)"></app-person-select>
+  </div>
+  <div class="col-6" *ngIf="isUserSelected">
+  </div>
+</div>

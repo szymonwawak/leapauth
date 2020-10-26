@@ -1,0 +1,16 @@
+<mat-card class="mat-card" [ngClass]="userSelected ? 'inactive' : ''">
+  <mat-card-header>
+    <mat-card-title>Choose your username</mat-card-title>
+    <mat-card-subtitle>You have to swipe your hand in order to select proper person</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>User credentials</mat-label>
+      <mat-select [(ngModel)]="selectedUser">
+        <mat-option *ngFor="let user of users" [value]="user">
+          {{user.name}} {{user.surname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

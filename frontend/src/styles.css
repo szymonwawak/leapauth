@@ -16,3 +16,7 @@ app-navigator {
   right: 50px;
   bottom: 50px;
 }
+
+.app-wrapper {
+  flex-grow: 1;
+}
