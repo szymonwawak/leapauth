@@ -3,5 +3,6 @@
     <app-person-select (isUserChosen)="onUserSelection($event)"></app-person-select>
   </div>
   <div class="col-6" *ngIf="isUserSelected">
+    <app-leap-live-authentication></app-leap-live-authentication>
   </div>
 </div>
