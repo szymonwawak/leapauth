@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
   <img src="assets/img/logo.png" class="logo">
 </mat-toolbar>
-<app-navigator></app-navigator>
+<app-navigator #navigatorComponent [hidden]="navigatorComponent.hidden"></app-navigator>
 <router-outlet></router-outlet>

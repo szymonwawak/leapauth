@@ -15,9 +15,10 @@ import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate
 import {ServiceInjector, services} from '../../core/classes/service-injector';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { LeapLiveAuthenticationComponent } from './components/leap-live-authentication/leap-live-authentication.component';
 
 @NgModule({
-  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent],
+  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LeapLiveAuthenticationComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
