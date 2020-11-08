@@ -1,0 +1,29 @@
+.login-card {
+  min-width: 400px;
+  max-width:500px;
+  width: 100%;
+  padding: 0;
+}
+
+.login-card-content {
+  padding: 16px;
+}
+
+.login-card-header {
+  padding-top: 16px;
+  background-color: #9c27b0;
+}
+
+.login-card-title {
+  font-size: 26px !important;
+  font-weight: 400;
+  color: white;
+}
+
+.wrapper {
+  background-color: rgba(98, 117, 127, 0.6);
+}
+
+mat-form-field {
+  margin: 0 30px 30px 0;
+}

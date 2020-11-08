@@ -15,32 +15,37 @@ import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate
 import {ServiceInjector, services} from '../../core/classes/service-injector';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {LoginComponent} from './components/login/login.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
-  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent],
+  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
     MatToolbarModule,
     SharedModule,
     MatCardModule,
-    MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
     FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: httpTranslateLoader,
         deps: [HttpClient]
       }
-    }),
+    })
   ]
 })
 export class AuthModule {
   constructor(translateService: TranslateService) {
-    translateService.addLangs(['pl']);
-    translateService.setDefaultLang('pl');
+    translateService.addLangs(['en']);
+    translateService.setDefaultLang('en');
     ServiceInjector.injector = Injector.create({providers: services});
   }
 }
