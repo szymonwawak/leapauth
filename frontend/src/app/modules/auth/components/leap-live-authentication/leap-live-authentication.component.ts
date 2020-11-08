@@ -1,9 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {UUID} from 'angular2-uuid';
-import * as SockJS from 'sockjs-client';
-import {Stomp} from '@stomp/stompjs';
 import * as riggedHand from '../../../../../assets/js/leap.rigged-hand-0.1.7.min';
 import * as leapPlugins from '../../../../../assets/js/leap-plugins-0.1.12';
+import {LeapSocketService} from '../../../../core/services/leap-socket.service';
 
 @Component({
   selector: 'app-leap-live-authentication',
@@ -15,24 +13,18 @@ export class LeapLiveAuthenticationComponent implements OnInit {
   private scene;
   private renderer;
   private camera;
+  private frameCounter = 0;
+  private frameIdentifier = 0;
+  readonly frameSendInterval = 6;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private leapSocketService: LeapSocketService, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
     this.initPlugins();
     this.initScene();
+    this.leapSocketService.initWebSocketConnection();
     this.initController();
-
-    // const uuid = UUID.UUID();
-    // const socket = new SockJS('http://localhost:8080/auth');
-    // const stompClient = Stomp.over(socket);
-    // stompClient.connect({}, (frame) => {
-    //   stompClient.subscribe('/queue/users/authorize/' + uuid, (msgOut) => {
-    //     console.log(msgOut);
-    //   });
-    //   stompClient.send('/leap/authorize/' + uuid, {}, 'test');
-    // });
   }
 
   private initPlugins() {
@@ -68,5 +60,17 @@ export class LeapLiveAuthenticationComponent implements OnInit {
       camera: this.camera,
       checkWebGL: true
     }).connect();
+    this.controller.on('frame', (frame) => {
+      this.frameCounter++;
+      if (this.shouldSendFrame()) {
+        this.leapSocketService.prepareAndSendFrameData(frame, this.frameIdentifier);
+        this.frameCounter = 0;
+        this.frameIdentifier++;
+      }
+    });
+  }
+
+  private shouldSendFrame(): boolean {
+    return this.frameCounter === this.frameSendInterval;
   }
 }
