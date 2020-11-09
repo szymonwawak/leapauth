@@ -6,6 +6,7 @@ import {AuthTemplateComponent} from './pages/auth-template/auth-template.compone
 import {LoginComponent} from './components/login/login.component';
 
 const routes: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'auth/leap'},
   {
     path: 'auth', component: AuthTemplateComponent, children: [
       {path: 'leap', component: LeapComponent},

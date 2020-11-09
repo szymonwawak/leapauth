@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.sidenav-container, .sidenav{
+  flex-grow: 1;
+}

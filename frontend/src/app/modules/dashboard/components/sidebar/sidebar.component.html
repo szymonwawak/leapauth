@@ -1,0 +1,9 @@
+<div class="logo-wrapper">
+  <img src="assets/img/logo.png" class="logo">
+</div>
+<mat-nav-list>
+  <a mat-list-item routerLink="{{route.path}}" *ngFor="let route of ROUTES">
+    <mat-icon>{{route.icon}}</mat-icon>
+    {{route.title | translate }}
+  </a>
+</mat-nav-list>

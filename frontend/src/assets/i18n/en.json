@@ -7,5 +7,6 @@
   "EmailRequired": "E-mail address is required",
   "Password": "Password",
   "PasswordRequired": "Password is required",
-  "Return": "Return"
+  "Return": "Return",
+  "CreateGesture": "Create gesture"
 }
