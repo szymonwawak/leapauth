@@ -2,3 +2,7 @@
   max-width: 200px;
   max-height: 150px;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
