@@ -58,4 +58,8 @@ export abstract class NavigableBase {
   unsubscribeNavService(): void {
     this.swipeDirectionObservable.unsubscribe();
   }
+
+  setNavHidden(hidden: boolean) {
+    this.navigationService.setHidden(hidden);
+  }
 }

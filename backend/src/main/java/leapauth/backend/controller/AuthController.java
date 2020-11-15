@@ -15,17 +15,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import leapauth.backend.model.HandFrameData;
+import leapauth.backend.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
+    private final String MESSAGE_RESPONSE_DESTINATION = "/queue/users/authorize/";
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private SimpMessagingTemplate simpMessagingTemplate;
+    private AuthService authService;
 
+    @Autowired
     public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.authService = authService;
+    }
+
+    @MessageMapping("/authorize/{userId}")
+    public void authenticateLeapUser(@DestinationVariable String userId, @Payload HandFrameData handFrameData) {
+        authService.processFrameData(userId, handFrameData);
     }
 
     @PostMapping("/login")
@@ -60,4 +78,3 @@ public class AuthController {
         }
     }
 }
-

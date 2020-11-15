@@ -18,15 +18,17 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {LoginComponent} from './components/login/login.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import { LeapLiveAuthenticationComponent } from './components/leap-live-authentication/leap-live-authentication.component';
 
 @NgModule({
-  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent],
+  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent, LeapLiveAuthenticationComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
     MatToolbarModule,
     SharedModule,
     MatCardModule,
+    MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
     FormsModule,

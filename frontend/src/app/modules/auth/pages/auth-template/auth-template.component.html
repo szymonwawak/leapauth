@@ -4,5 +4,5 @@
   <button mat-flat-button color="warn" class="mr-2" routerLink="/auth/leap">Leap auth</button>
   <button mat-flat-button color="accent" routerLink="/auth/login">Classic login</button>
 </mat-toolbar>
-<app-navigator></app-navigator>
+<app-navigator #navigatorComponent [hidden]="navigatorComponent.hidden"></app-navigator>
 <router-outlet></router-outlet>

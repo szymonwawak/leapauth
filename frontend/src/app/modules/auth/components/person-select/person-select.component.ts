@@ -3,6 +3,10 @@ import {NavigableBase} from '../../../../core/classes/navigable-base';
 import {NavigatorConfig} from '../../../../shared/models/navigator-config';
 import {User} from '../../../../shared/models/User';
 import {ApiService} from '../../../../core/services/api.service';
+import * as SockJS from 'sockjs-client';
+import {Stomp} from '@stomp/stompjs';
+import {UUID} from 'angular2-uuid';
+
 
 @Component({
   selector: 'app-person-select',
@@ -45,6 +49,7 @@ export class PersonSelectComponent extends NavigableBase implements OnInit {
   right(): void {
     this.setUserLock(true);
     this.unsubscribeNavService();
+    this.setNavHidden(true)
     this.startAuthenticationProcess();
   }
 

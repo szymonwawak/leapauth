@@ -13,13 +13,16 @@ import {ServiceInjector} from '../../../core/classes/service-injector';
 export class NavigatorComponent implements OnInit {
 
   public config: NavigatorConfig = {top: '', right: '', down: '', left: ''};
+  public hidden = false;
   private configObservable: Subject<NavigatorConfig>;
+  private visibilityObservable: Subject<boolean>;
   private navigationService: NavigationService;
   private detectGesture = true;
 
   constructor() {
     this.navigationService = ServiceInjector.injector.get(NavigationService);
     this.configObservable = this.navigationService.getConfig();
+    this.visibilityObservable = this.navigationService.getHidden();
   }
 
   ngOnInit(): void {
@@ -45,6 +48,9 @@ export class NavigatorComponent implements OnInit {
   private initNavigationService(): void {
     this.configObservable.subscribe((config) => {
       this.config = config;
+    });
+    this.visibilityObservable.subscribe((hidden) => {
+      this.hidden = hidden;
     });
   }
 

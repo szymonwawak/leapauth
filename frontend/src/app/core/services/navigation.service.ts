@@ -10,6 +10,7 @@ export class NavigationService {
 
   private swipeDirection = new Subject<Direction>();
   private config = new Subject<NavigatorConfig>();
+  private hidden = new Subject<boolean>();
 
   public setSwipeDirection(direction: Direction): void {
     this.swipeDirection.next(direction);
@@ -25,5 +26,13 @@ export class NavigationService {
 
   public getConfig(): Subject<NavigatorConfig> {
     return this.config;
+  }
+
+  public setHidden(hidden: boolean): void {
+    this.hidden.next(hidden);
+  }
+
+  public getHidden(): Subject<boolean> {
+    return this.hidden;
   }
 }
