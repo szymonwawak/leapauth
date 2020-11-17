@@ -1,0 +1,11 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step label="Gesture 1">
+    <app-gesture-save (gestureHolder)="onGestureSave($event)" (gestureVisualization)="onGestureVisualizationSave($event)" *ngIf="checkStep(1)"></app-gesture-save>
+  </mat-step>
+  <mat-step label="Gesture 2">
+    <app-gesture-save (gestureHolder)="onGestureSave($event)" *ngIf="checkStep(2)"></app-gesture-save>
+  </mat-step>
+  <mat-step label="Gesture 3">
+    <app-gesture-save (gestureHolder)="onGestureSave($event)" *ngIf="checkStep(3)"></app-gesture-save>
+  </mat-step>
+</mat-horizontal-stepper>

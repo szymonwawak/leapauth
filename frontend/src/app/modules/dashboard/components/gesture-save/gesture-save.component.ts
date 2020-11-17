@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
 import {FrameDataExtractorService} from '../../../../core/services/frame-data-extractor.service';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
+import {HandData} from "../../../../shared/models/hand-data";
 
 @Component({
-  selector: 'app-gesture-creation',
+  selector: 'app-gesture-save',
   templateUrl: './gesture-save.component.html',
   styleUrls: ['./gesture-save.component.css']
 })
@@ -11,15 +12,20 @@ export class GestureSaveComponent implements OnInit {
 
   public leftValue = 0;
   public rightValue = 0;
+  public isRecording = true;
   private frameArray = [];
   private croppedFrameArray = [];
   private lastFrame;
-  private isRecording = true;
   private controller;
   private player;
   private scene;
   private renderer;
   private camera;
+  @Output()
+  gestureHolder = new EventEmitter<Array<HandData>>();
+
+  @Output()
+  gestureVisualization = new EventEmitter<Blob>();
 
   constructor(private elementRef: ElementRef, private frameDataExtractorService: FrameDataExtractorService,
               private leapVisualisationInitializerService: LeapVisualisationInitializerService) {
@@ -123,7 +129,9 @@ export class GestureSaveComponent implements OnInit {
       }
       return false;
     });
+    this.gestureHolder.emit(filteredArray);
     const file = this.player.recording.save('json');
+    this.gestureVisualization.emit(file);
   }
 
   private trimRecordedFramesDataToCroppedRecording() {
