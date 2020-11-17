@@ -1,4 +1,4 @@
-/*    
+/*
  * LeapJS-Plugins  - v0.1.10 - 2014-11-14
  * http://github.com/leapmotion/leapjs-plugins/
  *
@@ -1684,15 +1684,15 @@ Each event also includes the hand object, which will be invalid for the handLost
 
       if (format === 'json') {
 
-        saveAs(new Blob([this.export('json')], {
+        return new Blob([this.export('json')], {
           type: "text/JSON;charset=utf-8"
-        }), filename + ".json");
+        });
 
       } else {
 
-        saveAs(new Blob([this.export('lz')], {
+        return new Blob([this.export('lz')], {
           type: "application/x-gzip;charset=utf-8"
-        }),  filename + ".json.lz");
+        });
 
       }
 

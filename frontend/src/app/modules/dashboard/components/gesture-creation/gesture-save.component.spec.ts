@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GestureCreationComponent} from './gesture-creation.component';
+import {GestureSaveComponent} from './gesture-save.component';
 
 describe('GestureCreationComponent', () => {
-  let component: GestureCreationComponent;
-  let fixture: ComponentFixture<GestureCreationComponent>;
+  let component: GestureSaveComponent;
+  let fixture: ComponentFixture<GestureSaveComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GestureCreationComponent ]
+      declarations: [ GestureSaveComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GestureCreationComponent);
+    fixture = TestBed.createComponent(GestureSaveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
