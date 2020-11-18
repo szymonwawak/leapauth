@@ -1,6 +1,6 @@
 package leapauth.backend.service;
 
-import leapauth.backend.model.HandFrameData;
+import leapauth.backend.model.HandData;
 import leapauth.backend.model.UserAuthSession;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import java.util.Optional;
 public class AuthService {
     private List<UserAuthSession> userAuthSessions = new ArrayList<>();
 
-    public void processFrameData(String userId, HandFrameData handFrameData) {
+    public void processFrameData(String userId, HandData handData) {
         UserAuthSession userAuthSession = getUserAuthSessionOrCreateNew(userId);
-        userAuthSession.addFrameDataToList(handFrameData);
+        userAuthSession.addFrameDataToList(handData);
         userAuthSession.authorizeGestureIfPossible();
     }
 

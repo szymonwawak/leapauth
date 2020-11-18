@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HandData} from '../../shared/models/hand-data';
+import {JsonHelperService} from "./json-helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class FrameDataExtractorService {
   private fingerDipDistances = ['f1-f2-dip-dist', 'f2-f3-dip-dist', 'f3-f4-dip-dist', 'f4-f5-dip-dist'];
   private fingerToPalmDistances = ['f1-palm-dist', 'f2-palm-dist', 'f3-palm-dist', 'f4-palm-dist', 'f5-palm-dist'];
 
-  constructor() {
+  constructor(private jsonHelperService: JsonHelperService) {
   }
 
   public prepareData(frame): HandData {
@@ -23,7 +24,9 @@ export class FrameDataExtractorService {
       const data = handData.data;
       this.preparePalmData(hand, data);
       this.prepareFingersData(hand, data);
+      handData.data = this.jsonHelperService.replaceMapToObject(data);
     }
+
     return handData;
   }
 

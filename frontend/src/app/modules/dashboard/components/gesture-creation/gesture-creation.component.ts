@@ -3,6 +3,8 @@ import {HandData} from '../../../../shared/models/hand-data';
 import {MatStepper} from '@angular/material/stepper';
 import {ApiService} from '../../../../core/services/api.service';
 import {JsonHelperService} from '../../../../core/services/json-helper.service';
+import {Gestures} from '../../../../shared/models/Gestures';
+import {GestureData} from '../../../../shared/models/GestureData';
 
 @Component({
   selector: 'app-gesture-creation',
@@ -12,12 +14,13 @@ import {JsonHelperService} from '../../../../core/services/json-helper.service';
 export class GestureCreationComponent implements OnInit {
 
   private gestureVisualization: Blob;
-  private gestures: Array<HandData>[] = new Array<Array<HandData>>(3);
+  private gestures: Gestures;
   private step = 1;
   @ViewChild('stepper')
   private stepper: MatStepper;
 
   constructor(private apiService: ApiService, private jsonHelperService: JsonHelperService) {
+    this.gestures = new Gestures();
   }
 
   ngOnInit(): void {
@@ -28,7 +31,9 @@ export class GestureCreationComponent implements OnInit {
   }
 
   public onGestureSave(event: Array<HandData>) {
-    this.gestures[this.step - 1] = event;
+    const gestureData = new GestureData();
+    gestureData.gesture = event;
+    this.gestures.gestures.push(gestureData);
     this.step++;
     this.stepper.next();
     if (this.step === 4) {
@@ -42,8 +47,8 @@ export class GestureCreationComponent implements OnInit {
 
   private saveGestureForUser() {
     const formData = new FormData();
+    formData.append('gestures', JSON.stringify(this.gestures));
     formData.append('gestureVisualization', this.gestureVisualization);
-    formData.append('gestures', JSON.stringify(this.gestures, this.jsonHelperService.mapReplacer));
     this.apiService.saveUserGestures(formData).subscribe(() => {
       console.log('success');
     }, () => {

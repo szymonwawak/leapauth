@@ -5,16 +5,14 @@ import {Injectable} from '@angular/core';
 })
 export class JsonHelperService {
 
-  constructor() { }
+  constructor() {
+  }
 
-  public mapReplacer(key, value) {
-    const originalObject = this[key];
-    if (originalObject instanceof Map) {
-      return {
-        value: Array.from(originalObject.entries())
-      };
-    } else {
-      return value;
-    }
+  public replaceMapToObject(map) {
+    const convMap = {};
+    map.forEach((val, key) => {
+      convMap[key] = val;
+    });
+    return convMap;
   }
 }

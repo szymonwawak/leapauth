@@ -1,6 +1,10 @@
 import {HandData} from './hand-data';
 
 export class GestureData {
-  gestures: Array<Array<HandData>>;
-  gestureVisualization: Blob;
+  gesture: Array<HandData>;
+
+  constructor() {
+    this.gesture = new Array<HandData>();
+  }
+
 }

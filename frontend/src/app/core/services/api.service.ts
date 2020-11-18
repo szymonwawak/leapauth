@@ -19,7 +19,7 @@ export class ApiService {
     return this.http.get<User[]>(this.USERS_URL);
   }
 
-  saveUserGestures(formData: FormData): Observable<any> {
-    return this.http.post<any>(this.GESTURE_URL + '/saveGestureForCurrentUser', formData);
+  saveUserGestures(gesturesData): Observable<any> {
+    return this.http.post<any>(this.GESTURE_URL + '/saveGestureForCurrentUser', gesturesData);
   }
 }

@@ -11,14 +11,14 @@ import java.util.List;
 public class UserAuthSession {
     private static int FRAMES_PER_SECOND = 12;
     private String userId;
-    private List<HandFrameData> handFrameDataList = new ArrayList<>();
+    private List<HandData> handDataList = new ArrayList<>();
 
-    public void addFrameDataToList(HandFrameData handFrameData) {
-        handFrameDataList.add(handFrameData);
+    public void addFrameDataToList(HandData handData) {
+        handDataList.add(handData);
     }
 
     public void authorizeGestureIfPossible() {
-        if (handFrameDataList.size() > 6) {
+        if (handDataList.size() > 6) {
             //TODO: performAuthentication
         }
     }
