@@ -1,12 +1,19 @@
 package leapauth.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import leapauth.backend.model.HandData;
 import leapauth.backend.model.LoginModel;
 import leapauth.backend.security.JWTFilter;
 import leapauth.backend.security.TokenProvider;
+import leapauth.backend.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -15,13 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import leapauth.backend.model.HandFrameData;
-import leapauth.backend.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,7 +34,7 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, SimpMessagingTemplate simpMessagingTemplate, AuthService authService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -42,8 +42,8 @@ public class AuthController {
     }
 
     @MessageMapping("/authorize/{userId}")
-    public void authenticateLeapUser(@DestinationVariable String userId, @Payload HandFrameData handFrameData) {
-        authService.processFrameData(userId, handFrameData);
+    public void authenticateLeapUser(@DestinationVariable String userId, @Payload HandData handData) {
+        authService.processFrameData(userId, handData);
     }
 
     @PostMapping("/login")
@@ -68,7 +68,7 @@ public class AuthController {
             this.idToken = idToken;
         }
 
-        @JsonProperty("id_token")
+        @JsonProperty("token")
         String getIdToken() {
             return idToken;
         }

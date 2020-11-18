@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthApiService} from '../../../../core/services/auth-api.service';
+import {AuthService} from '../../../../core/services/auth.service';
 import {LoginModel} from '../../../../shared/models/LoginModel';
 import {NavigableBase} from '../../../../core/classes/navigable-base';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent extends NavigableBase implements OnInit {
     password: ''
   };
 
-  constructor(private authService: AuthApiService) {
+  constructor(private authService: AuthService, private router: Router) {
     super();
   }
 
@@ -24,12 +25,14 @@ export class LoginComponent extends NavigableBase implements OnInit {
   login(): void {
     this.authService.login(this.loginModel).subscribe(
       res => {
-        const token: any = res.token;
+        const token: string = res.token;
         if (token) {
           localStorage.setItem('token', token);
+          this.router.navigateByUrl('/dashboard');
         }
       },
       err => {
+        console.error('Login failed');
       });
   }
 
