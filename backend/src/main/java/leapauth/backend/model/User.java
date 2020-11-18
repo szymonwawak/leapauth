@@ -26,4 +26,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_name")
     )
     private Set<Authority> authorities = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Gesture gesture;
 }
