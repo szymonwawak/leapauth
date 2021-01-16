@@ -1,13 +1,15 @@
 package leapauth.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name="gesture")
 @Data
 public class Gesture {
 
@@ -15,16 +17,21 @@ public class Gesture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gesture")
-    private Set<SingleGesture> gestures = new HashSet<>();
+    private Double precision;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gesture_id")
+    private List<SingleGesture> gestures = new ArrayList<>();
 
     @Lob
     @JsonIgnore
     private byte[] visualisation;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "fk_user")
+    @Getter(onMethod_ = @__(@JsonIgnore))
+    @OneToOne(mappedBy = "gesture", cascade = CascadeType.ALL)
     private User user;
+
+    public void addSingleGesture(SingleGesture gesture) {
+        gestures.add(gesture);
+    }
 }

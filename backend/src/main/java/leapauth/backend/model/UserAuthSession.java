@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class UserAuthSession {
-    private static int FRAMES_PER_SECOND = 12;
     private String userId;
     private List<HandData> handDataList = new ArrayList<>();
 

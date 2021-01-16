@@ -1,34 +1,49 @@
 package leapauth.backend.service;
 
-import leapauth.backend.model.HandData;
-import leapauth.backend.model.UserAuthSession;
+import leapauth.backend.model.LeapLoginModel;
+import leapauth.backend.model.User;
+import leapauth.backend.repository.UserRepository;
+import leapauth.backend.security.TokenProvider;
+import leapauth.backend.service.exception.AuthorizationErrorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AuthService {
-    private List<UserAuthSession> userAuthSessions = new ArrayList<>();
 
-    public void processFrameData(String userId, HandData handData) {
-        UserAuthSession userAuthSession = getUserAuthSessionOrCreateNew(userId);
-        userAuthSession.addFrameDataToList(handData);
-        userAuthSession.authorizeGestureIfPossible();
+    private TokenProvider tokenProvider;
+    private UserRepository userRepository;
+    private DynamicTimeWarpingService dynamicTimeWarpingService;
+
+    @Autowired
+    public AuthService(TokenProvider tokenProvider, UserRepository userRepository,
+                       DynamicTimeWarpingService dynamicTimeWarpingService) {
+        this.tokenProvider = tokenProvider;
+        this.userRepository = userRepository;
+        this.dynamicTimeWarpingService = dynamicTimeWarpingService;
     }
 
-    private UserAuthSession getUserAuthSessionOrCreateNew(String userId) {
-        Optional<UserAuthSession> foundSession = userAuthSessions
-                .stream()
-                .filter(authSession -> authSession.getUserId().equals(userId))
-                .findFirst();
-        UserAuthSession userAuthSession;
-        if (foundSession.isPresent()) {
-            userAuthSession = foundSession.get();
-        } else {
-            userAuthSession = new UserAuthSession();
+    public String authorizeUserWithGesture(LeapLoginModel leapLoginModel) {
+        Optional<User> foundUser = userRepository.findOneByEmail(leapLoginModel.getEmail());
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            if (dynamicTimeWarpingService.recognizeGesture(user, leapLoginModel.getGesture()))
+                return acceptUser(user);
         }
-        return userAuthSession;
+        throw new AuthorizationErrorException();
+    }
+
+    private String acceptUser(User user) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                user.getEmail(),
+                null
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return tokenProvider.createToken(authentication);
     }
 }

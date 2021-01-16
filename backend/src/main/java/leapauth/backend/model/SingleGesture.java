@@ -1,11 +1,12 @@
 package leapauth.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name="single_gesture")
 @Data
 public class SingleGesture {
 
@@ -16,9 +17,4 @@ public class SingleGesture {
     @Lob
     @JsonIgnore
     private byte[] gestureData;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_gesture")
-    private Gesture gesture;
-
 }

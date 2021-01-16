@@ -2,23 +2,23 @@ package leapauth.backend.service;
 
 import leapauth.backend.model.*;
 import leapauth.backend.repository.GestureRepository;
-import leapauth.backend.repository.SingleGestureRepository;
 import leapauth.backend.repository.UserRepository;
+import leapauth.backend.service.exception.MissingCurrentUserException;
 import leapauth.backend.util.SecurityUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.input.CharSequenceReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.util.*;
 
 @Service
 @EnableAsync
@@ -26,69 +26,110 @@ public class GestureService {
 
     private UserRepository userRepository;
     private GestureRepository gestureRepository;
-    private SingleGestureRepository singleGestureRepository;
+    private DynamicTimeWarpingService dynamicTimeWarpingService;
 
     @Autowired
-    public GestureService(UserRepository userRepository,
-                          GestureRepository gestureRepository,
-                          SingleGestureRepository singleGestureRepository) {
+    public GestureService(UserRepository userRepository, GestureRepository gestureRepository,
+                          DynamicTimeWarpingService dynamicTimeWarpingService) {
         this.userRepository = userRepository;
         this.gestureRepository = gestureRepository;
-        this.singleGestureRepository = singleGestureRepository;
+        this.dynamicTimeWarpingService = dynamicTimeWarpingService;
     }
 
-    public void saveUserGesture(GesturesVM gesturesVM, MultipartFile gestureVisualization) {
+    public List<Double[]> readGestureFromFile(byte[] gestureFile) throws IOException {
+        Reader reader = new CharSequenceReader(new String(gestureFile));
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(reader);
+        List<Double[]> gestureData = new ArrayList<>();
+        for (CSVRecord csvRecord : records) {
+            int size = csvRecord.size();
+            Double[] frameValues = new Double[size];
+            for (int i = 0; i < size; i++) {
+                frameValues[i] = Double.parseDouble(csvRecord.get(i));
+            }
+            normalizeValues(frameValues);
+            gestureData.add(frameValues);
+        }
+        return gestureData;
+    }
+
+    public List<Double[]> readGestureDataFromBrowser(List<HandData> handDataList) {
+        List<Double[]> gestureData = new ArrayList<>();
+        for (HandData data : handDataList) {
+            Collection<Double> frameData = data.getData().values();
+            Double[] frameDoubleArray = frameData.toArray(new Double[0]);
+            normalizeValues(frameDoubleArray);
+            gestureData.add(frameDoubleArray);
+        }
+        return gestureData;
+    }
+
+    private void normalizeValues(Double[] frameValues) {
+        List<Double> frameValuesList = Arrays.asList(frameValues);
+        double min = Collections.min(frameValuesList);
+        double max = Collections.max(frameValuesList);
+        for (int i = 0; i < frameValues.length; i++) {
+            frameValues[i] = (frameValues[i] - min) / (max - min);
+        }
+    }
+
+    public void saveUserGesture(GesturesVM gesturesVM, MultipartFile gestureVisualization) throws IOException {
         Optional<User> foundCurrentUser = SecurityUtils.getCurrentUser();
         if (foundCurrentUser.isEmpty()) {
-            return;
+            throw new MissingCurrentUserException();
         }
         User user = foundCurrentUser.get();
-        Gesture gesture = saveNewGesture(gesturesVM, gestureVisualization);
-        assignNewGestureToUser(user, gesture);
+        Gesture gesture = createGesture(gesturesVM, gestureVisualization);
+        deletePreviousGesture(user);
+        user.setGesture(gesture);
+        userRepository.save(user);
     }
 
-    private Gesture saveNewGesture(GesturesVM gesturesVM, MultipartFile gestureVisualization) {
+    private Gesture createGesture(GesturesVM gesturesVM, MultipartFile gestureVisualization) throws IOException {
         Gesture gesture = new Gesture();
-        try {
-            gesture.setVisualisation(gestureVisualization.getBytes());
-            addFramesDataToGesture(gesturesVM, gesture);
-        } catch (IOException e) {
-            e.printStackTrace();
+        gesture.setVisualisation(gestureVisualization.getBytes());
+        for (GestureData gestureData : gesturesVM.getGestures()) {
+            gesture.addSingleGesture(createSingleGesture(gestureData));
         }
+        calculateAndSetGesturePrecision(gesture);
         return gesture;
     }
 
-    private void addFramesDataToGesture(GesturesVM gestures, Gesture gesture) throws IOException {
-        Set<SingleGesture> singleGestureSet = new HashSet<>();
-        for (GestureData gestureData : gestures.getGestures()) {
-            File gestureFile = saveDataToFile(gestureData);
-            createAndSaveSingleGesture(singleGestureSet, gestureFile);
-        }
-        gesture.setGestures(singleGestureSet);
+    private SingleGesture createSingleGesture(GestureData gestureData) throws IOException {
+        ByteArrayOutputStream outputStream = prepareData(gestureData);
+        SingleGesture singleGesture = new SingleGesture();
+        singleGesture.setGestureData(outputStream.toByteArray());
+        return singleGesture;
     }
 
-    private File saveDataToFile(GestureData gestureData) throws IOException {
-        File csvOutputFile = new File("gesture" + gestureData.hashCode() + ".csv");
-        CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(csvOutputFile), CSVFormat.EXCEL);
+    private ByteArrayOutputStream prepareData(GestureData gestureData) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CSVPrinter csvPrinter = new CSVPrinter(new OutputStreamWriter(outputStream), CSVFormat.EXCEL);
         for (HandData handData : gestureData.getGesture()) {
             csvPrinter.printRecord(handData.getData().values());
         }
         csvPrinter.close();
-        return csvOutputFile;
+        return outputStream;
     }
 
-    private void createAndSaveSingleGesture(Set<SingleGesture> singleGestureSet, File gestureFile) throws IOException {
-        SingleGesture singleGesture = new SingleGesture();
-        singleGesture.setGestureData(FileUtils.readFileToByteArray(gestureFile));
-        singleGestureSet.add(singleGesture);
-        singleGestureRepository.save(singleGesture);
+    private void calculateAndSetGesturePrecision(Gesture gesture) throws IOException {
+        List<SingleGesture> gestures = gesture.getGestures();
+        int size = gestures.size();
+        double precisionSum = 0;
+        int counter = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = i; j < size; j++) {
+                List<Double[]> firstGesture = readGestureFromFile(gestures.get(i).getGestureData());
+                List<Double[]> secondGesture = readGestureFromFile(gestures.get(j).getGestureData());
+                precisionSum += dynamicTimeWarpingService.dynamicTimeWarp(firstGesture, secondGesture);
+                counter++;
+            }
+        }
+        gesture.setPrecision(precisionSum / counter);
     }
 
-
-    private void assignNewGestureToUser(User user, Gesture gesture) {
-        gestureRepository.delete(user.getGesture());
-        gestureRepository.save(gesture);
-        user.setGesture(gesture);
-        userRepository.save(user);
+    private void deletePreviousGesture(User user) {
+        Gesture previousGesture = user.getGesture();
+        if (previousGesture != null)
+            gestureRepository.delete(previousGesture);
     }
 }

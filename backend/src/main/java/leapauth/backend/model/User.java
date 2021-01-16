@@ -1,23 +1,33 @@
 package leapauth.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @Getter
     private Long id;
+    @Getter
     private String name;
+    @Getter
     private String surname;
+    @Getter
     private String email;
+    @Getter
     private String password;
 
+    @Getter
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -27,7 +37,12 @@ public class User {
     )
     private Set<Authority> authorities = new HashSet<>();
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
     private Gesture gesture;
+
+    @JsonIgnoreProperties("user")
+    public Gesture getGesture() {
+        return gesture;
+    }
 }
