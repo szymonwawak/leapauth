@@ -24,7 +24,7 @@ public class DynamicTimeWarpingService {
         Gesture userGesture = user.getGesture();
         List<SingleGesture> singleGestures = userGesture.getGestures();
         List<Double[]> currentGesture = gestureService.readGestureDataFromBrowser(gestureData);
-        double authRequiredPrecision = userGesture.getPrecision() * 1.2;
+        double authRequiredPrecision = userGesture.getGesturePrecision() * 1.2;
         List<Double[]> savedGesture;
         for (SingleGesture singleGesture : singleGestures) {
             try {

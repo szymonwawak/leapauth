@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.CharSequenceReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ public class GestureService {
 
     @Autowired
     public GestureService(UserRepository userRepository, GestureRepository gestureRepository,
-                          DynamicTimeWarpingService dynamicTimeWarpingService) {
+                          @Lazy DynamicTimeWarpingService dynamicTimeWarpingService) {
         this.userRepository = userRepository;
         this.gestureRepository = gestureRepository;
         this.dynamicTimeWarpingService = dynamicTimeWarpingService;
@@ -114,17 +115,16 @@ public class GestureService {
     private void calculateAndSetGesturePrecision(Gesture gesture) throws IOException {
         List<SingleGesture> gestures = gesture.getGestures();
         int size = gestures.size();
-        double precisionSum = 0;
-        int counter = 0;
+        double precision = 0;
         for (int i = 0; i < size; i++) {
             for (int j = i; j < size; j++) {
                 List<Double[]> firstGesture = readGestureFromFile(gestures.get(i).getGestureData());
                 List<Double[]> secondGesture = readGestureFromFile(gestures.get(j).getGestureData());
-                precisionSum += dynamicTimeWarpingService.dynamicTimeWarp(firstGesture, secondGesture);
-                counter++;
+                double dtw = dynamicTimeWarpingService.dynamicTimeWarp(firstGesture, secondGesture);
+                precision = dtw > precision ? dtw : precision;
             }
         }
-        gesture.setPrecision(precisionSum / counter);
+        gesture.setGesturePrecision(precision);
     }
 
     private void deletePreviousGesture(User user) {

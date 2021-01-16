@@ -17,7 +17,7 @@ public class Gesture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Double precision;
+    private Double gesturePrecision;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "gesture_id")
