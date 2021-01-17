@@ -9,6 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from './core/services/auth.service';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

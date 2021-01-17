@@ -18,6 +18,6 @@ public class Stats {
     private Integer totalLeapFailedAuthorizations;
     private Double averageGestureDifference;
 
-    @OneToOne(mappedBy = "userStats", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "stats", cascade = CascadeType.ALL)
     private User user;
 }

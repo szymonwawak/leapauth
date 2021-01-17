@@ -4,6 +4,7 @@ import leapauth.backend.model.Gesture;
 import leapauth.backend.model.HandData;
 import leapauth.backend.model.SingleGesture;
 import leapauth.backend.model.User;
+import leapauth.backend.service.exception.AuthorizationErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class LeapAuthorizationService {
 
     public boolean recognizeGesture(User user, List<HandData> gestureData) {
         Gesture userGesture = user.getGesture();
+        if (userGesture == null) {
+            throw new AuthorizationErrorException();
+        }
         List<SingleGesture> singleGestures = userGesture.getGestures();
         List<Double[]> currentGesture = gestureService.readGestureDataFromBrowser(gestureData);
         List<Double[]> savedGesture;

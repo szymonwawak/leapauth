@@ -123,7 +123,7 @@ export class GestureSaveComponent implements OnInit {
     let frameCounter = 0;
     const filteredArray = this.croppedFrameArray.filter(() => {
       frameCounter++;
-      if (frameCounter === 6) {
+      if (frameCounter === 2) {
         frameCounter = 0;
         return true;
       }

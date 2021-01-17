@@ -26,7 +26,6 @@ export class FrameDataExtractorService {
       this.prepareFingersData(hand, data);
       handData.data = this.jsonHelperService.replaceMapToObject(data);
     }
-
     return handData;
   }
 
