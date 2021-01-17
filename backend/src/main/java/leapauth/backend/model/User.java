@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -44,5 +46,19 @@ public class User {
     @JsonIgnoreProperties("user")
     public Gesture getGesture() {
         return gesture;
+    }
+
+    @Getter
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private Stats stats;
+
+    @Getter
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_attempt_id")
+    private List<LeapLoginAttempt> leapLoginAttempts = new ArrayList<>();
+
+    public void addLeapLoginAttempt(LeapLoginAttempt leapLoginAttempt) {
+        leapLoginAttempts.add(leapLoginAttempt);
     }
 }

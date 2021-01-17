@@ -24,15 +24,15 @@ public class AuthService {
 
     private TokenProvider tokenProvider;
     private UserRepository userRepository;
-    private DynamicTimeWarpingService dynamicTimeWarpingService;
+    private LeapAuthorizationService leapAuthorizationService;
     private final Map<String, LoginAttempts> loginAttemptsMap = new HashMap<>();
 
     @Autowired
     public AuthService(TokenProvider tokenProvider, UserRepository userRepository,
-                       DynamicTimeWarpingService dynamicTimeWarpingService) {
+                       LeapAuthorizationService leapAuthorizationService) {
         this.tokenProvider = tokenProvider;
         this.userRepository = userRepository;
-        this.dynamicTimeWarpingService = dynamicTimeWarpingService;
+        this.leapAuthorizationService = leapAuthorizationService;
     }
 
     public String authorizeUserWithGesture(LeapLoginModel leapLoginModel) {
@@ -40,7 +40,7 @@ public class AuthService {
         Optional<User> foundUser = userRepository.findOneByEmail(email);
         if (foundUser.isPresent()) {
             User user = foundUser.get();
-            if (dynamicTimeWarpingService.recognizeGesture(user, leapLoginModel.getGesture()))
+            if (leapAuthorizationService.recognizeGesture(user, leapLoginModel.getGesture()))
                 return acceptUser(user);
         }
         addFailedLoginAttempt(email);

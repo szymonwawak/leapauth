@@ -10,31 +10,38 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DynamicTimeWarpingService {
+public class LeapAuthorizationService {
 
     private GestureService gestureService;
+    private StatsService statsService;
+
     private final int MAX_NUMBER_OF_WARPS = 40;
+    private final double MAX_GESTURE_DIFFERENCE = 1.2;
 
     @Autowired
-    public DynamicTimeWarpingService(GestureService gestureService) {
+    public LeapAuthorizationService(GestureService gestureService, StatsService statsService) {
         this.gestureService = gestureService;
+        this.statsService = statsService;
     }
 
     public boolean recognizeGesture(User user, List<HandData> gestureData) {
         Gesture userGesture = user.getGesture();
         List<SingleGesture> singleGestures = userGesture.getGestures();
         List<Double[]> currentGesture = gestureService.readGestureDataFromBrowser(gestureData);
-        double authRequiredPrecision = userGesture.getGesturePrecision() * 1.2;
         List<Double[]> savedGesture;
+        double gestureDifference = 0;
         for (SingleGesture singleGesture : singleGestures) {
             try {
                 savedGesture = gestureService.readGestureFromFile(singleGesture.getGestureData());
-                if (dynamicTimeWarp(currentGesture, savedGesture) < authRequiredPrecision) {
+                gestureDifference = dynamicTimeWarp(currentGesture, savedGesture) / userGesture.getGesturePrecision();
+                if (gestureDifference < MAX_GESTURE_DIFFERENCE) {
+                    statsService.addLoginAttempt(true, gestureDifference, user);
                     return true;
                 }
             } catch (Exception ignore) {
             }
         }
+        statsService.addLoginAttempt(true, gestureDifference, user);
         return false;
     }
 

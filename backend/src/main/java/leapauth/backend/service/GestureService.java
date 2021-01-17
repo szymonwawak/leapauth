@@ -27,14 +27,14 @@ public class GestureService {
 
     private UserRepository userRepository;
     private GestureRepository gestureRepository;
-    private DynamicTimeWarpingService dynamicTimeWarpingService;
+    private LeapAuthorizationService leapAuthorizationService;
 
     @Autowired
     public GestureService(UserRepository userRepository, GestureRepository gestureRepository,
-                          @Lazy DynamicTimeWarpingService dynamicTimeWarpingService) {
+                          @Lazy LeapAuthorizationService leapAuthorizationService) {
         this.userRepository = userRepository;
         this.gestureRepository = gestureRepository;
-        this.dynamicTimeWarpingService = dynamicTimeWarpingService;
+        this.leapAuthorizationService = leapAuthorizationService;
     }
 
     public List<Double[]> readGestureFromFile(byte[] gestureFile) throws IOException {
@@ -120,7 +120,7 @@ public class GestureService {
             for (int j = i; j < size; j++) {
                 List<Double[]> firstGesture = readGestureFromFile(gestures.get(i).getGestureData());
                 List<Double[]> secondGesture = readGestureFromFile(gestures.get(j).getGestureData());
-                double dtw = dynamicTimeWarpingService.dynamicTimeWarp(firstGesture, secondGesture);
+                double dtw = leapAuthorizationService.dynamicTimeWarp(firstGesture, secondGesture);
                 precision = dtw > precision ? dtw : precision;
             }
         }
