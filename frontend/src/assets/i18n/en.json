@@ -8,5 +8,9 @@
   "Password": "Password",
   "PasswordRequired": "Password is required",
   "Return": "Return",
-  "CreateGesture": "Create gesture"
+  "CreateGesture": "Create gesture",
+  "logout": "Logout",
+  "gesture.save.success": "Gesture saved successfully!",
+  "gesture.save.missing": "Gesture is missing",
+  "gesture.save.too.large": "Recording is too long. Maximum frames count is 240"
 }

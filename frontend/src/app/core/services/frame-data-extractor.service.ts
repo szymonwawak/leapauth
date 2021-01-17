@@ -25,8 +25,9 @@ export class FrameDataExtractorService {
       this.preparePalmData(hand, data);
       this.prepareFingersData(hand, data);
       handData.data = this.jsonHelperService.replaceMapToObject(data);
+      return handData;
     }
-    return handData;
+    return null;
   }
 
   private preparePalmData(hand, handData: Map<string, number>): void {

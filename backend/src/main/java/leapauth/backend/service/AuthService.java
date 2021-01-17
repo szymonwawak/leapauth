@@ -11,13 +11,17 @@ import leapauth.backend.service.exception.LoginLockedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -49,10 +53,16 @@ public class AuthService {
 
     private String acceptUser(User user) {
         String email = user.getEmail();
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(user.getAuthorities()
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(",")));
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 email,
-                null
+                null,
+                grantedAuthorities
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         clearLoginAttempts(email);
         return tokenProvider.createToken(authentication);

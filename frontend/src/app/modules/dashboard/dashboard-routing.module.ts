@@ -8,8 +8,9 @@ import {AuthGuard} from '../../core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '', component: DashboardTemplateComponent, canActivate: [AuthGuard], children: [
-      {path: '', pathMatch: 'full', redirectTo: 'gesture'},
+      {path: '', pathMatch: 'full', redirectTo: 'createGesture'},
       {path: 'createGesture', component: GestureCreationComponent},
+      {path: 'logout', redirectTo: '/auth/leap'},
     ]
   }
 ];

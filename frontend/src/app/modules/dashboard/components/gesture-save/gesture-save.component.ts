@@ -2,6 +2,8 @@ import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core
 import {FrameDataExtractorService} from '../../../../core/services/frame-data-extractor.service';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
 import {HandData} from "../../../../shared/models/hand-data";
+import {UtilsService} from "../../../../core/services/utils.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-gesture-save',
@@ -21,14 +23,15 @@ export class GestureSaveComponent implements OnInit {
   private scene;
   private renderer;
   private camera;
+  private MAX_GESTURE_LENGTH = 240;
   @Output()
   gestureHolder = new EventEmitter<Array<HandData>>();
 
   @Output()
   gestureVisualization = new EventEmitter<Blob>();
-
   constructor(private elementRef: ElementRef, private frameDataExtractorService: FrameDataExtractorService,
-              private leapVisualisationInitializerService: LeapVisualisationInitializerService) {
+              private leapVisualisationInitializerService: LeapVisualisationInitializerService,
+              private utilsService: UtilsService, private translateService: TranslateService) {
   }
 
   ngOnInit(): void {
@@ -129,6 +132,13 @@ export class GestureSaveComponent implements OnInit {
       }
       return false;
     });
+    if (filteredArray.length === 0) {
+      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.missing'))
+      return;
+    } else if (this.croppedFrameArray.length > this.MAX_GESTURE_LENGTH) {
+      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.too.large'))
+      return;
+    }
     this.gestureHolder.emit(filteredArray);
     const file = this.player.recording.save('json');
     this.gestureVisualization.emit(file);

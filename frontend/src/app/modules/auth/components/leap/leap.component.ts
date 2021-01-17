@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {User} from "../../../../shared/models/User";
 
 @Component({
   selector: 'app-leap',
@@ -6,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./leap.component.css']
 })
 export class LeapComponent implements OnInit {
-  isUserSelected = false;
+  user: User;
 
   constructor() {
   }
@@ -14,7 +15,7 @@ export class LeapComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onUserSelection(isSelected: boolean): void {
-    this.isUserSelected = isSelected;
+  onUserSelection(selectedUser: User): void {
+    this.user = selectedUser;
   }
 }

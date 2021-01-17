@@ -3,9 +3,6 @@ import {NavigableBase} from '../../../../core/classes/navigable-base';
 import {NavigatorConfig} from '../../../../shared/models/navigator-config';
 import {User} from '../../../../shared/models/User';
 import {ApiService} from '../../../../core/services/api.service';
-import * as SockJS from 'sockjs-client';
-import {Stomp} from '@stomp/stompjs';
-import {UUID} from 'angular2-uuid';
 
 
 @Component({
@@ -15,7 +12,7 @@ import {UUID} from 'angular2-uuid';
 })
 export class PersonSelectComponent extends NavigableBase implements OnInit {
   public users: Array<User>;
-  @Output() isUserChosen = new EventEmitter<boolean>();
+  @Output() chosenUser = new EventEmitter<User>();
   userSelected = false;
   navConfig: NavigatorConfig = {top: 'top', down: 'down', left: 'left', right: 'right'};
   selectedUser: User;
@@ -47,14 +44,17 @@ export class PersonSelectComponent extends NavigableBase implements OnInit {
   }
 
   right(): void {
-    this.setUserLock(true);
-    this.unsubscribeNavService();
-    this.setNavHidden(true)
-    this.startAuthenticationProcess();
+    if (this.selectedUserId !== -1) {
+      this.setUser();
+      this.unsubscribeNavService();
+      this.setNavHidden(true);
+      this.startAuthenticationProcess();
+
+    }
   }
 
-  setUserLock(option: boolean): void {
-    this.isUserChosen.emit(option);
+  setUser(): void {
+    this.chosenUser.emit(this.selectedUser);
     this.userSelected = true;
   }
 

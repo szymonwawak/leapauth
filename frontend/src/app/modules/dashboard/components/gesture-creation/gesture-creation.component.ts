@@ -5,6 +5,8 @@ import {ApiService} from '../../../../core/services/api.service';
 import {JsonHelperService} from '../../../../core/services/json-helper.service';
 import {Gestures} from '../../../../shared/models/Gestures';
 import {GestureData} from '../../../../shared/models/GestureData';
+import {UtilsService} from "../../../../core/services/utils.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-gesture-creation',
@@ -19,7 +21,8 @@ export class GestureCreationComponent implements OnInit {
   @ViewChild('stepper')
   private stepper: MatStepper;
 
-  constructor(private apiService: ApiService, private jsonHelperService: JsonHelperService) {
+  constructor(private apiService: ApiService, private jsonHelperService: JsonHelperService,
+              private utilsService: UtilsService, private translateService: TranslateService) {
     this.gestures = new Gestures();
   }
 
@@ -50,9 +53,9 @@ export class GestureCreationComponent implements OnInit {
     formData.append('gestures', JSON.stringify(this.gestures));
     formData.append('gestureVisualization', this.gestureVisualization);
     this.apiService.saveUserGestures(formData).subscribe(() => {
-      console.log('success');
-    }, () => {
-      console.log('error');
+      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.success'));
+    }, err => {
+      this.utilsService.openSnackBar(err.error.message);
     });
   }
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import * as riggedHand from '../../../../../assets/js/leap.rigged-hand-0.1.7.min';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
 import {LeapLoginModel} from "../../../../shared/models/LeapLoginModel";
@@ -7,6 +7,7 @@ import {AuthService} from "../../../../core/services/auth.service";
 import {HandData} from "../../../../shared/models/hand-data";
 import {Router} from "@angular/router";
 import {UtilsService} from "../../../../core/services/utils.service";
+import {User} from "../../../../shared/models/User";
 
 @Component({
   selector: 'app-leap-live-authentication',
@@ -19,10 +20,13 @@ export class LeapLiveAuthenticationComponent implements OnInit {
   private renderer;
   private camera;
   private frameList: Array<HandData> = new Array<HandData>();
-  private blockRequest = false;
   private isAuthRequestPending = false;
+  private errorCounter = 0;
+
+  @Input()
+  private selectedUser: User;
   readonly FRAME_SEND_INTERVAL = 2;
-  private RECORDING_LENGTH = 200;
+  private RECORDING_LENGTH = 240;
 
   constructor(private elementRef: ElementRef, private authService: AuthService,
               private leapVisualisationInitializerService: LeapVisualisationInitializerService,
@@ -39,7 +43,11 @@ export class LeapLiveAuthenticationComponent implements OnInit {
     this.scene = this.leapVisualisationInitializerService.getScene();
     this.renderer = this.leapVisualisationInitializerService.getRenderer();
     this.camera = this.leapVisualisationInitializerService.getCamera();
-    this.leapVisualisationInitializerService.initializeSceneAndAttachToGivenComponent(this.scene, this.camera, this.renderer, this.elementRef.nativeElement);
+    const sceneContainer = this.elementRef.nativeElement;
+    if (sceneContainer.firstChild) {
+      sceneContainer.firstChild.remove();
+    }
+    this.leapVisualisationInitializerService.initializeSceneAndAttachToGivenComponent(this.scene, this.camera, this.renderer, sceneContainer);
   }
 
   private initController(): void {
@@ -61,17 +69,19 @@ export class LeapLiveAuthenticationComponent implements OnInit {
 
   private addFrameDataToListAndSaveWhenReady(frame): void {
     const handData = this.frameDataExtractorService.prepareData(frame);
-    this.frameList.push(handData);
+    if (handData) {
+      this.frameList.push(handData);
+    }
     if (this.frameList.length >= this.RECORDING_LENGTH) {
       this.authorize();
     }
   }
 
-  private authorize() {
+  private authorize(): void {
     const authModel = new LeapLoginModel();
-    authModel.email = 'address1@test.com';
+    authModel.email = this.selectedUser.email;
     authModel.gesture = this.frameList;
-    if (!this.blockRequest) {
+    if (!this.isAuthRequestPending) {
       this.isAuthRequestPending = true;
       this.authService.loginWithLeap(authModel).subscribe(
         res => {
@@ -81,11 +91,22 @@ export class LeapLiveAuthenticationComponent implements OnInit {
             this.router.navigateByUrl('/dashboard');
           }
         }, error => {
-          this.utilsService.openSnackBar(error.error.message);
-          this.ngOnInit();
+          this.handleError(error);
+        },
+      ).add(
+        () => {
+          this.frameList = new Array<HandData>();
+          this.isAuthRequestPending = false;
         }
       );
-      this.blockRequest = true;
     }
+  }
+
+  private handleError(error): void {
+    this.errorCounter++;
+    if (this.errorCounter > 3) {
+      location.reload();
+    }
+    this.utilsService.openSnackBar(error.error.message);
   }
 }

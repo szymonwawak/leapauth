@@ -30,6 +30,9 @@ public class StatsService {
     private void recalculateUserStats(User user) {
         List<LeapLoginAttempt> leapLoginAttempts = user.getLeapLoginAttempts();
         Stats stats = user.getStats();
+        if (stats == null) {
+            stats = new Stats();
+        }
         int totalAttempts = leapLoginAttempts.size();
         int failedAuthorizations = (int) leapLoginAttempts.stream()
                 .filter(leapLoginAttempt -> !leapLoginAttempt.getSuccess())

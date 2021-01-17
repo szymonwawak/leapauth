@@ -45,7 +45,7 @@ public class LeapAuthorizationService {
             } catch (Exception ignore) {
             }
         }
-        statsService.addLoginAttempt(true, gestureDifference, user);
+        statsService.addLoginAttempt(false, gestureDifference, user);
         return false;
     }
 
