@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class LeapLoginModel {
-    private String email;
+public class LeapLoginModel extends LoginModel {
     private List<HandData> gesture;
 }

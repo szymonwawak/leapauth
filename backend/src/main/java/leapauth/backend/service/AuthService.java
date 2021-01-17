@@ -1,16 +1,22 @@
 package leapauth.backend.service;
 
 import leapauth.backend.model.LeapLoginModel;
+import leapauth.backend.model.LoginAttempts;
+import leapauth.backend.model.LoginModel;
 import leapauth.backend.model.User;
 import leapauth.backend.repository.UserRepository;
 import leapauth.backend.security.TokenProvider;
 import leapauth.backend.service.exception.AuthorizationErrorException;
+import leapauth.backend.service.exception.LoginLockedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -19,6 +25,7 @@ public class AuthService {
     private TokenProvider tokenProvider;
     private UserRepository userRepository;
     private DynamicTimeWarpingService dynamicTimeWarpingService;
+    private final Map<String, LoginAttempts> loginAttemptsMap = new HashMap<>();
 
     @Autowired
     public AuthService(TokenProvider tokenProvider, UserRepository userRepository,
@@ -29,21 +36,52 @@ public class AuthService {
     }
 
     public String authorizeUserWithGesture(LeapLoginModel leapLoginModel) {
-        Optional<User> foundUser = userRepository.findOneByEmail(leapLoginModel.getEmail());
+        String email = leapLoginModel.getEmail();
+        Optional<User> foundUser = userRepository.findOneByEmail(email);
         if (foundUser.isPresent()) {
             User user = foundUser.get();
             if (dynamicTimeWarpingService.recognizeGesture(user, leapLoginModel.getGesture()))
                 return acceptUser(user);
         }
+        addFailedLoginAttempt(email);
         throw new AuthorizationErrorException();
     }
 
     private String acceptUser(User user) {
+        String email = user.getEmail();
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                user.getEmail(),
+                email,
                 null
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        clearLoginAttempts(email);
         return tokenProvider.createToken(authentication);
+    }
+
+    public void checkLoginLock(LoginModel loginModel) {
+        LoginAttempts loginAttempts = loginAttemptsMap.get(loginModel.getEmail());
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (loginAttempts != null) {
+            LocalDateTime lockTime = loginAttempts.getBlockDate();
+            if (lockTime != null && lockTime.isAfter(currentTime))
+                throw new LoginLockedException();
+        }
+    }
+
+    public void addFailedLoginAttempt(String email) {
+        LoginAttempts loginAttempts = loginAttemptsMap.get(email);
+        if (loginAttempts != null) {
+            loginAttempts.incrementCounter();
+        } else {
+            loginAttempts = new LoginAttempts();
+            loginAttemptsMap.put(email, loginAttempts);
+        }
+    }
+
+    public void clearLoginAttempts(String email) {
+        LoginAttempts loginAttempts = loginAttemptsMap.get(email);
+        if (loginAttempts != null) {
+            loginAttempts.clear();
+        }
     }
 }

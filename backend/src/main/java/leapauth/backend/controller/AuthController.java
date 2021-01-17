@@ -1,8 +1,8 @@
 package leapauth.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import leapauth.backend.model.ClassicLoginModel;
 import leapauth.backend.model.LeapLoginModel;
-import leapauth.backend.model.LoginModel;
 import leapauth.backend.security.JWTFilter;
 import leapauth.backend.security.TokenProvider;
 import leapauth.backend.service.AuthService;
@@ -36,21 +36,25 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JWTToken> authorize(@RequestBody LoginModel loginModel) {
+    public ResponseEntity<JWTToken> authorize(@RequestBody ClassicLoginModel classicLoginModel) {
+        authService.checkLoginLock(classicLoginModel);
+        String email = classicLoginModel.getEmail();
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                loginModel.getEmail(),
-                loginModel.getPassword()
+                email,
+                classicLoginModel.getPassword()
         );
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        authService.clearLoginAttempts(email);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping("/leapLogin")
     public ResponseEntity<JWTToken> leapAuthorize(@RequestBody LeapLoginModel leapLoginModel) {
+        authService.checkLoginLock(leapLoginModel);
         String jwt = authService.authorizeUserWithGesture(leapLoginModel);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
