@@ -3,7 +3,6 @@ package leapauth.backend.service;
 import leapauth.backend.model.*;
 import leapauth.backend.repository.GestureRepository;
 import leapauth.backend.repository.UserRepository;
-import leapauth.backend.service.exception.MissingCurrentUserException;
 import leapauth.backend.util.SecurityUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -53,6 +52,29 @@ public class GestureService {
         return gestureData;
     }
 
+    public byte[] getVisualization(Long userId) {
+        User user;
+        if (userId != null && SecurityUtils.isCurrentUserAdmin()) {
+            Optional<User> foundUser = userRepository.findById(userId);
+            if (foundUser.isPresent()) {
+                user = foundUser.get();
+                return getUserVisualization(user);
+            }
+            throw new RuntimeException("Couldn't find such user");
+        }
+        user = SecurityUtils.getCurrentUser();
+        return getUserVisualization(user);
+    }
+
+    private byte[] getUserVisualization(User user) {
+        Gesture gesture = user.getGesture();
+        if (gesture != null) {
+            return gesture.getVisualisation();
+        } else {
+            throw new RuntimeException("Gesture doesn't exist");
+        }
+    }
+
     public List<Double[]> readGestureDataFromBrowser(List<HandData> handDataList) {
         List<Double[]> gestureData = new ArrayList<>();
         for (HandData data : handDataList) {
@@ -74,11 +96,7 @@ public class GestureService {
     }
 
     public void saveUserGesture(GesturesVM gesturesVM, MultipartFile gestureVisualization) throws IOException {
-        Optional<User> foundCurrentUser = SecurityUtils.getCurrentUser();
-        if (foundCurrentUser.isEmpty()) {
-            throw new MissingCurrentUserException();
-        }
-        User user = foundCurrentUser.get();
+        User user = SecurityUtils.getCurrentUser();
         Gesture gesture = createGesture(gesturesVM, gestureVisualization);
         deletePreviousGesture(user);
         user.setGesture(gesture);

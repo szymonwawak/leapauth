@@ -1749,6 +1749,32 @@ Each event also includes the hand object, which will be invalid for the handLost
       xhr.send(null);
     },
 
+    readFileData: function(responseData, callback){
+
+      var url = this.url;
+
+      if (url.split('.')[url.split('.').length - 1] == 'lz') {
+        responseData = this.decompress(responseData);
+      }
+
+      responseData = JSON.parse(responseData);
+
+      if (responseData.metadata.formatVersion == 2) {
+        responseData.frames = this.unPackFrameData(responseData.frames);
+      }
+
+      this.metadata = responseData.metadata;
+
+      this.setFrames(responseData.frames);
+
+      this.loading = false;
+
+      if (callback) {
+        callback.call(this, responseData.frames);
+      }
+
+    },
+
     finishLoad: function(responseData, callback){
 
       var url = this.url;

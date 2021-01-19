@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../shared/models/User';
+import {StatsPackVM} from '../../shared/models/StatsPackVM';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,9 @@ import {User} from '../../shared/models/User';
 export class ApiService {
 
   private BASE_URL = 'http://localhost:8080';
-  private USERS_URL = this.BASE_URL + '/users';
-  private GESTURE_URL = this.BASE_URL + '/gestures';
+  private USERS_URL = this.BASE_URL + '/users/';
+  private GESTURE_URL = this.BASE_URL + '/gestures/';
+  private STATS_URL = this.BASE_URL + '/stats/';
 
   constructor(private http: HttpClient) {
   }
@@ -20,6 +22,14 @@ export class ApiService {
   }
 
   saveUserGestures(gesturesData): Observable<any> {
-    return this.http.post<any>(this.GESTURE_URL + '/saveGestureForCurrentUser', gesturesData);
+    return this.http.post<any>(this.GESTURE_URL + 'saveGestureForCurrentUser', gesturesData);
+  }
+
+  getGestureVisualization(userId: number): Observable<any> {
+    return this.http.post<any>(this.GESTURE_URL + 'visualization', userId);
+  }
+
+  getUserStats(userId: number) {
+    return this.http.get<StatsPackVM>(this.STATS_URL + userId);
   }
 }

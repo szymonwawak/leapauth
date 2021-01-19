@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <div class="row text-center">
+    <div class="col">
+      <p class="p-4">{{'stats.authorizations' | translate}}</p>
+      {{singleStats?.totalLeapAuthorizations}}
+    </div>
+    <div class="col">
+      <p class="p-4">{{'stats.failedAuthorizations' | translate}}</p>
+      {{singleStats?.totalLeapFailedAuthorizations}}
+    </div>
+    <div class="col">
+      <p class="p-4">{{'stats.averageGestureDifference' | translate}}</p>
+      {{singleStats?.averageGestureDifference}}
+    </div>
+  </div>
+</div>

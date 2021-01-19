@@ -12,5 +12,15 @@
   "logout": "Logout",
   "gesture.save.success": "Gesture saved successfully!",
   "gesture.save.missing": "Gesture is missing",
-  "gesture.save.too.large": "Recording is too long. Maximum frames count is 240"
+  "gesture.save.too.large": "Recording is too long. Maximum frames count is 240",
+  "gesture.show": "Show gesture",
+  "stats": "Stats",
+  "stats.overall": "Overall stats",
+  "stats.today": "Today",
+  "stats.week": "Last week",
+  "stats.month": "Last month",
+  "stats.total": "Total stats",
+  "stats.authorizations": "Authorizations:",
+  "stats.failedAuthorizations": "Failed authorizations:",
+  "stats.averageGestureDifference": "Average gesture difference ratio:"
 }
