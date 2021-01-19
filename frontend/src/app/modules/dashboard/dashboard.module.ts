@@ -7,7 +7,6 @@ import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate
 import {ServiceInjector, services} from '../../core/classes/service-injector';
 import {HttpClient} from '@angular/common/http';
 import {httpTranslateLoader} from '../auth/auth.module';
-import {GestureComponent} from './components/gesture/gesture.component';
 import {GestureSaveComponent} from './components/gesture-save/gesture-save.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {MatMenuModule} from '@angular/material/menu';
@@ -20,7 +19,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
-  declarations: [DashboardTemplateComponent, GestureComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent],
+  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

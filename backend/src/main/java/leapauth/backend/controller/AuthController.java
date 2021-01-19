@@ -1,11 +1,9 @@
 package leapauth.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import leapauth.backend.model.ClassicLoginModel;
-import leapauth.backend.model.LeapLoginModel;
+import leapauth.backend.model.LoginModel;
 import leapauth.backend.security.JWTFilter;
 import leapauth.backend.security.TokenProvider;
-import leapauth.backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,7 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, SimpMessagingTemplate simpMessagingTemplate, AuthService authService) {
+    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.authService = authService;
