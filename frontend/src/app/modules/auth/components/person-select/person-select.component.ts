@@ -3,9 +3,6 @@ import {NavigableBase} from '../../../../core/classes/navigable-base';
 import {NavigatorConfig} from '../../../../shared/models/navigator-config';
 import {User} from '../../../../shared/models/User';
 import {ApiService} from '../../../../core/services/api.service';
-import * as SockJS from 'sockjs-client';
-import {Stomp} from '@stomp/stompjs';
-import {UUID} from 'angular2-uuid';
 
 
 @Component({

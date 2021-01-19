@@ -1,0 +1,43 @@
+<div class="wrapper d-flex w-100 h-100">
+  <mat-card class="register-card align-self-center m-auto">
+    <mat-card-header class="register-card-header">
+      <mat-card-title class="register-card-title">{{'register' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="register-card-content">
+      <form #f="ngForm" (ngSubmit)="f.valid && register()">
+        <mat-form-field>
+          <mat-label>{{'name' | translate }}</mat-label>
+          <input matInput type="text" name="name" required [(ngModel)]="registerModel.name" #name="ngModel">
+          <div *ngIf="(name.invalid && name.touched)">
+            <small *ngIf="name.errors?.required" class="text-danger">{{'required.name' | translate }}</small>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'surname' | translate }}</mat-label>
+          <input matInput type="text" name="surname" required [(ngModel)]="registerModel.surname" #surname="ngModel">
+          <div *ngIf="(surname.invalid && surname.touched)">
+            <small *ngIf="surname.errors?.required" class="text-danger">{{'required.surname' | translate }}</small>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'Email' | translate }}</mat-label>
+          <input matInput type="email" name="mail" required [(ngModel)]="registerModel.email" #mail="ngModel">
+          <div *ngIf="(mail.invalid && mail.touched)">
+            <small *ngIf="mail.errors?.required" class="text-danger">{{'EmailRequired' | translate }}</small>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'Password' | translate }}</mat-label>
+          <input matInput type="password" name="password" required [(ngModel)]="registerModel.password"
+                 #password="ngModel">
+          <div *ngIf="(password.invalid && password.touched)">
+            <small *ngIf="password.errors?.required" class="text-danger">{{'PasswordRequired' | translate }}</small>
+          </div>
+        </mat-form-field>
+        <button type="submit" [disabled]="f.invalid" mat-raised-button color="accent">{{'register' | translate }}</button>
+        <button type="button" mat-raised-button color="warn" class="float-right"
+                routerLink="">{{'Return' | translate }}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -43,7 +43,7 @@ public class UserService {
                 }
         );
         User newUser = MapperUtils.map(managedUser, User.class);
-        managedUser.setPassword(passwordEncoder.encode(password));
+        newUser.setPassword(passwordEncoder.encode(password));
         userRepository.save(newUser);
     }
 

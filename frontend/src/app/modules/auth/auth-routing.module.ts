@@ -4,13 +4,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {LeapComponent} from './components/leap/leap.component';
 import {AuthTemplateComponent} from './pages/auth-template/auth-template.component';
 import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'auth/leap'},
   {
     path: 'auth', component: AuthTemplateComponent, children: [
       {path: 'leap', component: LeapComponent},
-      {path: 'login', component: LoginComponent}
+      {path: 'login', component: LoginComponent},
+      {path: 'register', component: RegisterComponent}
     ]
   }
 ];

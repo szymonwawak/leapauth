@@ -18,10 +18,11 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {LoginComponent} from './components/login/login.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { LeapLiveAuthenticationComponent } from './components/leap-live-authentication/leap-live-authentication.component';
+import {LeapLiveAuthenticationComponent} from './components/leap-live-authentication/leap-live-authentication.component';
+import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
-  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent, LeapLiveAuthenticationComponent],
+  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent, LeapLiveAuthenticationComponent, RegisterComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

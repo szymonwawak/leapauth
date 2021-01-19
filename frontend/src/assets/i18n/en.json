@@ -4,9 +4,14 @@
   "UserCredentials": "User credentials",
   "LogIn": "Log in",
   "Email": "E-mail address",
+  "name": "Name",
+  "surname": "Surname",
+  "required.name": "Name is required",
+  "required.surname": "Surname is required",
   "EmailRequired": "E-mail address is required",
   "Password": "Password",
   "PasswordRequired": "Password is required",
+  "register": "Register",
   "Return": "Return",
   "CreateGesture": "Create gesture"
 }

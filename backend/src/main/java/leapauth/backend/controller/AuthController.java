@@ -1,19 +1,13 @@
 package leapauth.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import leapauth.backend.model.HandData;
 import leapauth.backend.model.LoginModel;
 import leapauth.backend.security.JWTFilter;
 import leapauth.backend.security.TokenProvider;
-import leapauth.backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -27,23 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final String MESSAGE_RESPONSE_DESTINATION = "/queue/users/authorize/";
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private SimpMessagingTemplate simpMessagingTemplate;
-    private AuthService authService;
 
     @Autowired
-    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, SimpMessagingTemplate simpMessagingTemplate, AuthService authService) {
+    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.simpMessagingTemplate = simpMessagingTemplate;
-        this.authService = authService;
-    }
-
-    @MessageMapping("/authorize/{userId}")
-    public void authenticateLeapUser(@DestinationVariable String userId, @Payload HandData handData) {
-        authService.processFrameData(userId, handData);
     }
 
     @PostMapping("/login")
