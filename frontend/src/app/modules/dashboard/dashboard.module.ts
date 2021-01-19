@@ -16,10 +16,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxSliderModule} from '@angular-slider/ngx-slider';
 import {GestureCreationComponent} from './components/gesture-creation/gesture-creation.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import {GestureVisualizationComponent} from './components/gesture-visualization/gesture-visualization.component';
+import {StatsComponent} from './components/stats/stats.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent],
+  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -37,6 +41,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatButtonToggleModule,
     NgxSliderModule,
     MatStepperModule,
+    MatTabsModule,
+    SharedModule,
   ]
 })
 export class DashboardModule {

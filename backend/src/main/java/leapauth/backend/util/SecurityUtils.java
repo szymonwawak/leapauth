@@ -9,8 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class SecurityUtils {
 
@@ -21,9 +19,9 @@ public class SecurityUtils {
         SecurityUtils.userRepository = userRepository;
     }
 
-    public static Optional<String> getCurrentUserEmail() {
+    public static String getCurrentUserEmail() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
+        return extractPrincipal(securityContext.getAuthentication());
     }
 
     private static String extractPrincipal(Authentication authentication) {
@@ -38,8 +36,15 @@ public class SecurityUtils {
         return null;
     }
 
-    public static Optional<User> getCurrentUser() {
-        Optional<String> login = getCurrentUserEmail();
-        return login.map(userRepository::findOneByEmail).orElse(null);
+    public static User getCurrentUser() {
+        String login = getCurrentUserEmail();
+        return userRepository.findOneByEmail(login).get();
+    }
+
+    public static boolean isCurrentUserAdmin() {
+        User user = getCurrentUser();
+        return user.getAuthorities()
+                .stream()
+                .anyMatch(authority -> authority.getName().equals("admin"));
     }
 }

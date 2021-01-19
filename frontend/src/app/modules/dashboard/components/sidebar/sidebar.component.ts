@@ -11,6 +11,10 @@ export class SidebarComponent implements OnInit {
   public ROUTES: NavRoute[] = [
     {
       path: 'createGesture', title: 'CreateGesture', icon: 'gesture', class: ''
+    }, {
+      path: 'showGesture', title: 'gesture.show', icon: 'movie', class: ''
+    },  {
+      path: 'stats', title: 'stats', icon: 'show_chart', class: ''
     }
   ];
 

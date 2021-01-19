@@ -1,0 +1,15 @@
+<div class="wrapper w-75 h-50 m-auto">
+  <h2 class="text-center pt-5 pb-5">{{'stats.total' | translate}}</h2>
+  <app-single-stats [singleStats]="statsPackVM.total" class="pb-5"></app-single-stats>
+  <mat-tab-group animationDuration="0ms" mat-align-tabs="center" class="pt-5">
+    <mat-tab label="{{'stats.today' | translate}}">
+      <app-single-stats [singleStats]="statsPackVM.day"></app-single-stats>
+    </mat-tab>
+    <mat-tab label="{{'stats.week' | translate}}">
+      <app-single-stats [singleStats]="statsPackVM.week"></app-single-stats>
+    </mat-tab>
+    <mat-tab label="{{'stats.month' | translate}}">
+      <app-single-stats [singleStats]="statsPackVM.month"></app-single-stats>
+    </mat-tab>
+  </mat-tab-group>
+</div>

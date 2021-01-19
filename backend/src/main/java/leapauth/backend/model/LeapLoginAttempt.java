@@ -20,7 +20,7 @@ public class LeapLoginAttempt {
 
     @Getter(onMethod_ = @__(@JsonIgnore))
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_attempt_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public LeapLoginAttempt() {

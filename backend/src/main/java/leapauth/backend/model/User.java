@@ -55,7 +55,7 @@ public class User {
 
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_attempt_id")
+    @JoinColumn(name = "user_id")
     private List<LeapLoginAttempt> leapLoginAttempts = new ArrayList<>();
 
     public void addLeapLoginAttempt(LeapLoginAttempt leapLoginAttempt) {

@@ -20,4 +20,10 @@ public class Stats {
 
     @OneToOne(mappedBy = "stats", cascade = CascadeType.ALL)
     private User user;
+
+    public Stats() {
+        totalLeapAuthorizations = 0;
+        totalLeapFailedAuthorizations = 0;
+        averageGestureDifference = 0.0;
+    }
 }

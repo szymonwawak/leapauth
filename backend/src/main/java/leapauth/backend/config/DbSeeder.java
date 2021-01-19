@@ -1,6 +1,7 @@
 package leapauth.backend.config;
 
 import leapauth.backend.model.Authority;
+import leapauth.backend.model.Stats;
 import leapauth.backend.model.User;
 import leapauth.backend.repository.AuthorityRepository;
 import leapauth.backend.repository.UserRepository;
@@ -40,6 +41,7 @@ public class DbSeeder implements CommandLineRunner {
             user.setEmail("address" + i + "@test.com");
             user.setPassword(passwordEncoder.encode("password" + i));
             user.setAuthorities(authorities);
+            user.setStats(new Stats());
             userRepository.save(user);
         }
     }

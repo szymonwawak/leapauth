@@ -1,0 +1,82 @@
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
+import {ApiService} from "../../../../core/services/api.service";
+import {UtilsService} from "../../../../core/services/utils.service";
+
+@Component({
+  selector: 'app-gesture-visualization',
+  templateUrl: './gesture-visualization.component.html',
+  styleUrls: ['./gesture-visualization.component.css']
+})
+export class GestureVisualizationComponent implements OnInit {
+
+  private controller;
+  private player;
+  private scene;
+  private renderer;
+  private camera;
+
+  constructor(private elementRef: ElementRef, private apiService: ApiService,
+              private leapVisualisationInitializerService: LeapVisualisationInitializerService,
+              private utilsService: UtilsService) {
+  }
+
+  ngOnInit(): void {
+    this.initScene();
+    this.initController();
+  }
+
+  public playback(): void {
+    this.player.toggle();
+  }
+
+  private initController() {
+    this.controller = new Leap.Controller();
+    this.initLeapPlugins();
+    this.loadGestureVisualization();
+  }
+
+  private initLeapPlugins() {
+    this.controller.use('playback', {
+      loop: false,
+      pauseHotkey: false,
+      pauseOnHand: false
+    });
+    this.controller.use('riggedHand', {
+      parent: this.scene,
+      scene: this.scene,
+      renderer: this.renderer,
+      offset: new THREE.Vector3(0, 0, 0),
+      camera: this.camera,
+      checkWebGL: true
+    }).connect();
+    this.player = this.controller.plugins.playback.player;
+  }
+
+  private initScene() {
+    this.scene = this.leapVisualisationInitializerService.getScene();
+    this.renderer = this.leapVisualisationInitializerService.getRenderer();
+    this.camera = this.leapVisualisationInitializerService.getCamera();
+    this.leapVisualisationInitializerService.initializeSceneAndAttachToGivenComponent(this.scene, this.camera, this.renderer, this.getSceneContainer());
+  }
+
+  private getSceneContainer() {
+    const nativeElement = this.elementRef.nativeElement;
+    return nativeElement.getElementsByClassName('scene-container')[0];
+  }
+
+  private loadGestureVisualization(): void {
+    this.apiService.getGestureVisualization(null).subscribe(
+      res => {
+        // const recording = this.player.recording.readFileData(JSON.stringify(res));
+        this.player.setRecording(res);
+        const recording = this.player.recording;
+        recording.url = 'visualization.url';
+        recording.readFileData(JSON.stringify(res));
+        this.player.setRecording(recording).play();
+      }, error => {
+        this.utilsService.openSnackBar(error.error.message);
+      }
+    );
+  }
+}
