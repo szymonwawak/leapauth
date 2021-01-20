@@ -10,8 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
@@ -32,7 +32,7 @@ public class DbSeeder implements CommandLineRunner {
         Authority authority = new Authority();
         authority.setName("user");
         authorityRepository.save(authority);
-        Set<Authority> authorities = new HashSet();
+        List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
         for (int i = 1; i < 4; i++) {
             User user = new User();

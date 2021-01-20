@@ -35,6 +35,7 @@
     "@types/stompjs": "^2.3.4",
     "angular2-uuid": "^1.1.1",
     "bootstrap": "^4.5.3",
+    "flag-icon-css": "^3.5.0",
     "leapjs": "^1.0.0",
     "rxjs": "~6.5.4",
     "sockjs": "^0.3.21",

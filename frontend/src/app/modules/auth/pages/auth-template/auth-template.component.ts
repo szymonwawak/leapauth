@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth-template',
@@ -7,10 +8,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AuthTemplateComponent implements OnInit {
 
-  constructor() {
+  constructor(private translateService: TranslateService) {
   }
 
   ngOnInit(): void {
   }
 
+  changeLanguage(lang: string) {
+    this.translateService.use(lang);
+  }
 }

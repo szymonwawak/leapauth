@@ -4,6 +4,7 @@ import leapauth.backend.dto.PasswordChangeDTO;
 import leapauth.backend.dto.RegisterDTO;
 import leapauth.backend.dto.UserDTO;
 import leapauth.backend.model.User;
+import leapauth.backend.repository.AuthorityRepository;
 import leapauth.backend.repository.UserRepository;
 import leapauth.backend.service.exception.AccountAlreadyCreatedException;
 import leapauth.backend.service.exception.InvalidPasswordException;
@@ -20,11 +21,14 @@ public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private AuthorityRepository authorityRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityRepository = authorityRepository;
     }
 
     public List<UserDTO> getAll() {
@@ -44,6 +48,7 @@ public class UserService {
         );
         User newUser = MapperUtils.map(managedUser, User.class);
         newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setAuthorities(authorityRepository.findAuthoritiesByName("user").get());
         userRepository.save(newUser);
     }
 

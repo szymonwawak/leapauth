@@ -36,10 +36,6 @@ public class GestureController {
 
     @PostMapping("/visualization")
     public ResponseEntity getVisualization(Long userId) {
-        try {
-            return new ResponseEntity<>(gestureService.getVisualization(userId), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.valueOf(500));
-        }
+        return new ResponseEntity<>(gestureService.getVisualization(userId), HttpStatus.OK);
     }
 }
