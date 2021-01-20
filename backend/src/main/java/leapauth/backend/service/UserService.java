@@ -53,8 +53,8 @@ public class UserService {
     }
 
     public void changePassword(PasswordChangeDTO passwordChangeDTO) {
-        SecurityUtils.getCurrentUserEmail()
-                .flatMap(userRepository::findOneByEmail)
+        String email = SecurityUtils.getCurrentUserEmail();
+        userRepository.findOneByEmail(email)
                 .ifPresent(
                         user -> {
                             if (!arePasswordsForChangeCorrect(passwordChangeDTO, user)) {
