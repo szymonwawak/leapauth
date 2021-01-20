@@ -41,15 +41,19 @@ public class StatsService {
     }
 
     private StatsPackVM prepareStats(User user) {
-        StatsVM today = getStatsByDateRange(LocalDate.now().atTime(0, 0), LocalDateTime.now(), user);
-        StatsVM week = getStatsByDateRange(LocalDate.now().minusDays(7).atStartOfDay(), LocalDateTime.now(), user);
-        StatsVM month = getStatsByDateRange(LocalDate.now().minusMonths(1).atStartOfDay(), LocalDateTime.now(), user);
-        StatsVM total = prepareTotalStats(user);
+        StatsVM today = getUserStatsByDateRange(LocalDate.now().atTime(0, 0), LocalDateTime.now(), user);
+        StatsVM week = getUserStatsByDateRange(LocalDate.now().minusDays(7).atStartOfDay(), LocalDateTime.now(), user);
+        StatsVM month = getUserStatsByDateRange(LocalDate.now().minusMonths(1).atStartOfDay(), LocalDateTime.now(), user);
+        StatsVM total = prepareTotalUserStats(user);
         return new StatsPackVM(today, week, month, total);
     }
 
-    private StatsVM getStatsByDateRange(LocalDateTime from, LocalDateTime to, User user) {
+    private StatsVM getUserStatsByDateRange(LocalDateTime from, LocalDateTime to, User user) {
         List<LeapLoginAttempt> leapLoginAttemptList = leapLoginAttemptRepository.getByUserAndDateBetween(user, from, to);
+        return getStatsVMFromLoginAttemptList(leapLoginAttemptList);
+    }
+
+    private StatsVM getStatsVMFromLoginAttemptList(List<LeapLoginAttempt> leapLoginAttemptList) {
         int totalAuthorizations = leapLoginAttemptList.size();
         int totalFailedAuthorizations = 0;
         double averageGestureDifference = 0;
@@ -63,7 +67,7 @@ public class StatsService {
         return new StatsVM(totalAuthorizations, totalFailedAuthorizations, averageGestureDifference);
     }
 
-    private StatsVM prepareTotalStats(User user) {
+    private StatsVM prepareTotalUserStats(User user) {
         return MapperUtils.map(user.getStats(), StatsVM.class);
     }
 
@@ -91,5 +95,18 @@ public class StatsService {
         stats.setTotalLeapFailedAuthorizations(failedAuthorizations);
         stats.setAverageGestureDifference(averageGesturePrecisionSum / totalAttempts);
         statsRepository.save(stats);
+    }
+
+    public StatsPackVM getTotalSystemStats() {
+        StatsVM today = getStatsByDateRange(LocalDate.now().atTime(0, 0), LocalDateTime.now());
+        StatsVM week = getStatsByDateRange(LocalDate.now().minusDays(7).atStartOfDay(), LocalDateTime.now());
+        StatsVM month = getStatsByDateRange(LocalDate.now().minusMonths(1).atStartOfDay(), LocalDateTime.now());
+        StatsVM total = getStatsByDateRange(LocalDate.now().minusYears(100).atStartOfDay(), LocalDateTime.now());
+        return new StatsPackVM(today, week, month, total);
+    }
+
+    private StatsVM getStatsByDateRange(LocalDateTime from, LocalDateTime to) {
+        List<LeapLoginAttempt> leapLoginAttemptList = leapLoginAttemptRepository.getByDateBetween(from, to);
+        return getStatsVMFromLoginAttemptList(leapLoginAttemptList);
     }
 }
