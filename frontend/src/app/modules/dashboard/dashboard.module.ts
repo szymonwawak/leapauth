@@ -3,10 +3,8 @@ import {CommonModule} from '@angular/common';
 import {DashboardTemplateComponent} from './pages/dashboard-template/dashboard-template.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {DashboardRoutingModule} from './dashboard-routing.module';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {ServiceInjector, services} from '../../core/classes/service-injector';
-import {HttpClient} from '@angular/common/http';
-import {httpTranslateLoader} from '../auth/auth.module';
 import {GestureSaveComponent} from './components/gesture-save/gesture-save.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {MatMenuModule} from '@angular/material/menu';
@@ -28,13 +26,6 @@ import {SharedModule} from "../../shared/shared.module";
     CommonModule,
     DashboardRoutingModule,
     MatSidenavModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
     MatMenuModule,
     MatListModule,
     MatIconModule,
@@ -43,6 +34,7 @@ import {SharedModule} from "../../shared/shared.module";
     MatStepperModule,
     MatTabsModule,
     SharedModule,
+    TranslateModule,
   ]
 })
 export class DashboardModule {

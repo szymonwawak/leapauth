@@ -5,11 +5,14 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceInjector, services} from './core/classes/service-injector';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from './core/services/auth.service';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from "@angular/material/dialog";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {httpTranslateLoader} from "./modules/auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +24,14 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    MatDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -29,7 +40,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
       }
     })
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}, ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}, TranslateModule],
   bootstrap: [AppComponent]
 })
 
