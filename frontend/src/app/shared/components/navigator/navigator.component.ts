@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NavigatorConfig} from '../../models/navigator-config';
+import {Component, OnInit} from '@angular/core';
+import {NavigatorConfig} from '../../models/NavigatorConfig';
 import {NavigationService} from '../../../core/services/navigation.service';
 import {Direction} from '../../../core/enums/direction.enum';
 import {Subject} from 'rxjs';
@@ -13,7 +13,7 @@ import {ServiceInjector} from '../../../core/classes/service-injector';
 export class NavigatorComponent implements OnInit {
 
   public config: NavigatorConfig = {top: '', right: '', down: '', left: ''};
-  public hidden = false;
+  public hidden = true;
   private configObservable: Subject<NavigatorConfig>;
   private visibilityObservable: Subject<boolean>;
   private navigationService: NavigationService;

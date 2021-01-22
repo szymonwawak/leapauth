@@ -1,22 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth.service';
 import {LoginModel} from '../../../../shared/models/LoginModel';
-import {NavigableBase} from '../../../../core/classes/navigable-base';
 import {Router} from "@angular/router";
+import {UtilsService} from "../../../../core/services/utils.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent extends NavigableBase implements OnInit {
+export class LoginComponent  implements OnInit {
   loginModel: LoginModel = {
     email: '',
     password: ''
   };
 
-  constructor(private authService: AuthService, private router: Router) {
-    super();
+  constructor(private authService: AuthService, private router: Router, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -32,19 +31,7 @@ export class LoginComponent extends NavigableBase implements OnInit {
         }
       },
       err => {
-        console.error('Login failed');
+        this.utilsService.openSnackBar(err.error.message);
       });
-  }
-
-  down(): void {
-  }
-
-  left(): void {
-  }
-
-  right(): void {
-  }
-
-  top(): void {
   }
 }

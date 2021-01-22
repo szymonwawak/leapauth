@@ -1,8 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {NavigableBase} from '../../../../core/classes/navigable-base';
-import {NavigatorConfig} from '../../../../shared/models/navigator-config';
+import {NavigatorConfig} from '../../../../shared/models/NavigatorConfig';
 import {User} from '../../../../shared/models/User';
 import {ApiService} from '../../../../core/services/api.service';
+import {TranslateService} from "@ngx-translate/core";
+import {UtilsService} from "../../../../core/services/utils.service";
 
 
 @Component({
@@ -10,21 +12,38 @@ import {ApiService} from '../../../../core/services/api.service';
   templateUrl: './person-select.component.html',
   styleUrls: ['./person-select.component.css']
 })
-export class PersonSelectComponent extends NavigableBase implements OnInit {
+export class PersonSelectComponent extends NavigableBase implements OnInit, OnDestroy {
   public users: Array<User>;
   @Output() chosenUser = new EventEmitter<User>();
   userSelected = false;
-  navConfig: NavigatorConfig = {top: 'top', down: 'down', left: 'left', right: 'right'};
+  navConfig: NavigatorConfig;
   selectedUser: User;
   selectedUserId = -1;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private translateService: TranslateService,
+              private utilsService: UtilsService) {
     super();
   }
 
   ngOnInit(): void {
-    this.initNavigator(this.navConfig);
-    this.loadUsers();
+    this.loadTranslationsAndInitComponent();
+  }
+
+  private loadTranslationsAndInitComponent(): void {
+    this.translateService.get('user.previous').subscribe(
+      res => {
+        this.navConfig = {
+          top: res,
+          down: this.translateService.instant('user.next'), left: '', right: this.translateService.instant('authorize')
+        };
+        this.initNavigator(this.navConfig);
+        this.loadUsers();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.navigationService.setHidden(true);
   }
 
   private loadUsers(): void {
@@ -32,7 +51,7 @@ export class PersonSelectComponent extends NavigableBase implements OnInit {
       (res) => {
         this.users = res;
       }, (error) => {
-        console.log('An error occured: ' + error.message);
+        this.utilsService.openSnackBar(error.error.message);
       });
   }
 

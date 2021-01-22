@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HandData} from '../../shared/models/hand-data';
+import {HandData} from '../../shared/models/HandData';
 import {JsonHelperService} from "./json-helper.service";
 
 @Injectable({

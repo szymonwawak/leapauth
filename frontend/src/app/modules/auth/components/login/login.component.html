@@ -1,26 +1,29 @@
 <div class="wrapper d-flex w-100 h-100">
   <mat-card class="login-card align-self-center m-auto">
     <mat-card-header class="login-card-header">
-      <mat-card-title class="login-card-title">{{'LogIn' | translate }}</mat-card-title>
+      <mat-card-title class="login-card-title">{{'login' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="login-card-content">
       <form #f="ngForm" (ngSubmit)="f.valid && login()">
         <mat-form-field>
           <mat-label>{{'Email' | translate }}</mat-label>
-          <input matInput type="email" name="mail" required [(ngModel)]="loginModel.email" #mail="ngModel">
+          <input matInput type="email" name="mail" required [(ngModel)]="loginModel.email" #mail="ngModel" email="true">
           <div *ngIf="(mail.invalid && mail.touched)">
-            <small *ngIf="mail.errors?.required" class="text-danger">{{'EmailRequired' | translate }}</small>
+            <small *ngIf="mail.errors?.required" class="text-danger">{{'required.email' | translate }}</small>
+            <small *ngIf="mail.errors?.email" class="text-danger">{{'field.not.email' | translate }}</small>
           </div>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{'Password' | translate }}</mat-label>
-          <input matInput type="password" name="password" required [(ngModel)]="loginModel.password"
+          <mat-label>{{'password' | translate }}</mat-label>
+          <input matInput type="password" name="password" required [(ngModel)]="loginModel.password" minlength="8"
                  #password="ngModel">
           <div *ngIf="(password.invalid && password.touched)">
             <small *ngIf="password.errors?.required" class="text-danger">{{'PasswordRequired' | translate }}</small>
+            <small *ngIf="password.errors?.minlength"
+                   class="text-danger">{{'password.too.short' | translate }}</small>
           </div>
         </mat-form-field>
-        <button type="submit" [disabled]="f.invalid" mat-raised-button color="accent">{{'LogIn' | translate }}</button>
+        <button type="submit" [disabled]="f.invalid" mat-raised-button color="accent">{{'login' | translate }}</button>
         <button type="button" mat-raised-button color="warn" class="float-right"
                 routerLink="">{{'Return' | translate }}</button>
       </form>

@@ -4,7 +4,7 @@ import {LeapVisualisationInitializerService} from '../../../../core/services/lea
 import {LeapLoginModel} from "../../../../shared/models/LeapLoginModel";
 import {FrameDataExtractorService} from "../../../../core/services/frame-data-extractor.service";
 import {AuthService} from "../../../../core/services/auth.service";
-import {HandData} from "../../../../shared/models/hand-data";
+import {HandData} from "../../../../shared/models/HandData";
 import {Router} from "@angular/router";
 import {UtilsService} from "../../../../core/services/utils.service";
 import {User} from "../../../../shared/models/User";

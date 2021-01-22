@@ -21,20 +21,24 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'Email' | translate }}</mat-label>
-          <input matInput type="email" name="mail" required [(ngModel)]="registerModel.email" #mail="ngModel">
+          <input matInput type="email" name="mail" required [(ngModel)]="registerModel.email" #mail="ngModel"
+                 email="true">
           <div *ngIf="(mail.invalid && mail.touched)">
-            <small *ngIf="mail.errors?.required" class="text-danger">{{'EmailRequired' | translate }}</small>
+            <small *ngIf="mail.errors?.required" class="text-danger">{{'required.email' | translate }}</small>
+            <small *ngIf="mail.errors?.email" class="text-danger">{{'field.not.email' | translate }}</small>
           </div>
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'Password' | translate }}</mat-label>
           <input matInput type="password" name="password" required [(ngModel)]="registerModel.password"
-                 #password="ngModel">
+                 #password="ngModel" minlength="8">
           <div *ngIf="(password.invalid && password.touched)">
-            <small *ngIf="password.errors?.required" class="text-danger">{{'PasswordRequired' | translate }}</small>
+            <small *ngIf="password.errors?.required" class="text-danger">{{'required.password' | translate }}</small>
+            <small *ngIf="password.errors?.minlength" class="text-danger">{{'password.too.short' | translate }}</small>
           </div>
         </mat-form-field>
-        <button type="submit" [disabled]="f.invalid" mat-raised-button color="accent">{{'register' | translate }}</button>
+        <button type="submit" [disabled]="f.invalid" mat-raised-button
+                color="accent">{{'register' | translate }}</button>
         <button type="button" mat-raised-button color="warn" class="float-right"
                 routerLink="">{{'Return' | translate }}</button>
       </form>

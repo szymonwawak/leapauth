@@ -2,7 +2,7 @@ import {NavigationService} from '../services/navigation.service';
 import {Subject} from 'rxjs';
 import {Direction} from '../enums/direction.enum';
 import {ServiceInjector} from './service-injector';
-import {NavigatorConfig} from '../../shared/models/navigator-config';
+import {NavigatorConfig} from '../../shared/models/NavigatorConfig';
 
 export abstract class NavigableBase {
   protected id: string;
@@ -42,6 +42,7 @@ export abstract class NavigableBase {
   initNavigator(config: NavigatorConfig) {
     this.applyNavigatorConfig(config);
     this.subscribeToNavService();
+    this.navigationService.setHidden(false);
   }
 
   applyNavigatorConfig(config: NavigatorConfig): void {

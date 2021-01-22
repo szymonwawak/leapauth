@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
 import {FrameDataExtractorService} from '../../../../core/services/frame-data-extractor.service';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
-import {HandData} from "../../../../shared/models/hand-data";
+import {HandData} from "../../../../shared/models/HandData";
 import {UtilsService} from "../../../../core/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 

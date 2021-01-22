@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SingleStats} from '../../models/SingleStats';
+import {SingleStats} from '../../../../shared/models/SingleStats';
 
 @Component({
   selector: 'app-single-stats',

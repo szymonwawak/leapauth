@@ -18,7 +18,8 @@ export class PasswordChangeComponent implements OnInit {
   };
 
   constructor(private translateService: TranslateService, private utilsService: UtilsService,
-              private authService: AuthService, public dialogRef: MatDialogRef<PasswordChangeComponent>) { }
+              private authService: AuthService, public dialogRef: MatDialogRef<PasswordChangeComponent>) {
+  }
 
   ngOnInit(): void {
   }

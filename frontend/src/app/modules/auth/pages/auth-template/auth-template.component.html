@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
   <img src="assets/img/logo.png" class="logo">
   <span class="spacer"></span>
-  <button mat-flat-button color="warn" class="mr-2" routerLink="/auth/leap">Leap auth</button>
-  <button mat-flat-button color="accent" routerLink="/auth/login">Classic login</button>
-  <button mat-flat-button color="primary" routerLink="/auth/register">Register</button>
+  <button mat-flat-button color="warn" class="mr-2" routerLink="/auth/leap">{{'app.title' | translate}}</button>
+  <button mat-flat-button color="accent" routerLink="/auth/login">{{'login.classic' | translate}}</button>
+  <button mat-flat-button color="primary" routerLink="/auth/register">{{'register' | translate}}</button>
   <span class="flag-icon flag-icon-pl" (click)="changeLanguage('pl')"></span>
   <span class="flag-icon flag-icon-gb" (click)="changeLanguage('en')"></span>
 </mat-toolbar>

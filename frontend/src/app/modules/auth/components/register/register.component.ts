@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth.service';
 import {RegisterModel} from '../../../../shared/models/RegisterModel';
 import {Router} from '@angular/router';
+import {UtilsService} from '../../../../core/services/utils.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +14,8 @@ export class RegisterComponent implements OnInit {
 
   registerModel: RegisterModel;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private utilsService: UtilsService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit(): void {
@@ -27,23 +30,11 @@ export class RegisterComponent implements OnInit {
   register(): void {
     this.authService.register(this.registerModel).subscribe(
       res => {
-        console.log('Account has been created');
         this.router.navigateByUrl('auth/login');
+        this.utilsService.openSnackBar(this.translateService.instant('account.created'));
       },
       err => {
-        console.error('Registration failed');
+        this.utilsService.openSnackBar(err.error.message);
       });
-  }
-
-  down(): void {
-  }
-
-  left(): void {
-  }
-
-  right(): void {
-  }
-
-  top(): void {
   }
 }

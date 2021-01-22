@@ -1,11 +1,11 @@
 package leapauth.backend.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import leapauth.backend.model.ClassicLoginModel;
 import leapauth.backend.model.LeapLoginModel;
 import leapauth.backend.security.JWTFilter;
 import leapauth.backend.security.TokenProvider;
 import leapauth.backend.service.AuthService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -60,19 +60,11 @@ public class AuthController {
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
+    @Data
     static class JWTToken {
         private String idToken;
 
         JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
-
-        @JsonProperty("token")
-        String getIdToken() {
-            return idToken;
-        }
-
-        void setIdToken(String idToken) {
             this.idToken = idToken;
         }
     }

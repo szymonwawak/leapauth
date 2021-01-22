@@ -3,15 +3,18 @@ import {NavRoute} from '../../../../shared/models/NavRoute';
 import {MatDialog} from '@angular/material/dialog';
 import {PasswordChangeComponent} from '../../../auth/components/password-change/password-change.component';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangeSystemPropertiesComponent} from "../change-system-properties/change-system-properties.component";
+import {ChangeSystemPropertiesComponent} from '../change-system-properties/change-system-properties.component';
+import {NavigableBase} from '../../../../core/classes/navigable-base';
+import {NavigatorConfig} from '../../../../shared/models/NavigatorConfig';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent extends NavigableBase implements OnInit {
 
+  navConfig: NavigatorConfig = {top: 'top', down: 'down', left: 'left', right: 'right'};
   public ROUTES: NavRoute[] = [
     {
       path: 'createGesture', title: 'CreateGesture', icon: 'gesture', class: ''
@@ -27,9 +30,11 @@ export class SidebarComponent implements OnInit {
   ];
 
   constructor(private dialog: MatDialog, private translateService: TranslateService) {
+    super();
   }
 
   ngOnInit(): void {
+    this.initNavigator(this.navConfig);
   }
 
   showChangePasswordDialog(): void {
@@ -50,5 +55,17 @@ export class SidebarComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('token');
+  }
+
+  top(): void {
+  }
+
+  right(): void {
+  }
+
+  left(): void {
+  }
+
+  down(): void {
   }
 }

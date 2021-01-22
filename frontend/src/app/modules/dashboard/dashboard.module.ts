@@ -24,11 +24,14 @@ import {ChangeSystemPropertiesComponent} from './components/change-system-proper
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {SingleStatsComponent} from './components/single-stats/single-stats.component';
 import {AdminDashboardComponent} from './components/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
-  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent, ChangeSystemPropertiesComponent, AdminDashboardComponent],
+  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent,
+    GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent,
+    ChangeSystemPropertiesComponent, AdminDashboardComponent, SingleStatsComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

@@ -3,20 +3,18 @@ import {CommonModule} from '@angular/common';
 import {NavigatorComponent} from './components/navigator/navigator.component';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from '@fortawesome/free-solid-svg-icons';
-import {SingleStatsComponent} from './components/single-stats/single-stats.component';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
-  declarations: [NavigatorComponent, SingleStatsComponent],
+  declarations: [NavigatorComponent],
     imports: [
         CommonModule,
         FontAwesomeModule,
         TranslateModule,
     ],
     exports: [
-        NavigatorComponent,
-        SingleStatsComponent
+        NavigatorComponent
     ]
 })
 export class SharedModule {

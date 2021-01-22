@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {HandData} from '../../../../shared/models/hand-data';
+import {HandData} from '../../../../shared/models/HandData';
 import {MatStepper} from '@angular/material/stepper';
 import {ApiService} from '../../../../core/services/api.service';
 import {JsonHelperService} from '../../../../core/services/json-helper.service';

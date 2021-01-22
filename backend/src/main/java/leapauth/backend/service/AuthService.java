@@ -62,7 +62,6 @@ public class AuthService {
                 null,
                 grantedAuthorities
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         clearLoginAttempts(email);
         return tokenProvider.createToken(authentication);

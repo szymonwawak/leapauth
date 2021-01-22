@@ -1,4 +1,4 @@
-import {HandData} from './hand-data';
+import {HandData} from './HandData';
 
 export class GestureData {
   gesture: Array<HandData>;

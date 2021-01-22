@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Direction} from '../enums/direction.enum';
-import {NavigatorConfig} from '../../shared/models/navigator-config';
+import {NavigatorConfig} from '../../shared/models/NavigatorConfig';
 
 @Injectable({
   providedIn: 'root'
