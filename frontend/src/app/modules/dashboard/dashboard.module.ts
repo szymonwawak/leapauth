@@ -16,18 +16,19 @@ import {GestureCreationComponent} from './components/gesture-creation/gesture-cr
 import {MatStepperModule} from '@angular/material/stepper';
 import {GestureVisualizationComponent} from './components/gesture-visualization/gesture-visualization.component';
 import {StatsComponent} from './components/stats/stats.component';
-import {MatTabsModule} from "@angular/material/tabs";
-import {SharedModule} from "../../shared/shared.module";
+import {MatTabsModule} from '@angular/material/tabs';
+import {SharedModule} from '../../shared/shared.module';
 import {UserListComponent} from './components/user-list/user-list.component';
-import {MatButtonModule} from "@angular/material/button";
+import {MatButtonModule} from '@angular/material/button';
 import {ChangeSystemPropertiesComponent} from './components/change-system-properties/change-system-properties.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {AdminDashboardComponent} from './components/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
-  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent, ChangeSystemPropertiesComponent],
+  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent, ChangeSystemPropertiesComponent, AdminDashboardComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

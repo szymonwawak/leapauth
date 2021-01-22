@@ -1,5 +1,6 @@
 package leapauth.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -18,6 +19,7 @@ public class LeapLoginAttempt {
     LocalDateTime date;
     Double gestureDifference;
 
+    @JsonIgnoreProperties("leapLoginAttempts")
     @Getter(onMethod_ = @__(@JsonIgnore))
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

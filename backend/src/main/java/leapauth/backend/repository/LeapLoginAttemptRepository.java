@@ -10,4 +10,5 @@ import java.util.List;
 public interface LeapLoginAttemptRepository  extends JpaRepository<LeapLoginAttempt, Long> {
     public List<LeapLoginAttempt> getByUserAndDateBetween(User user, LocalDateTime from, LocalDateTime to);
     public List<LeapLoginAttempt> getByDateBetween(LocalDateTime from, LocalDateTime to);
+    public List<LeapLoginAttempt> getByDateAfter(LocalDateTime date);
 }

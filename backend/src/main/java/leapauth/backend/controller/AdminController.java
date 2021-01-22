@@ -1,6 +1,7 @@
 package leapauth.backend.controller;
 
 import leapauth.backend.dto.UserAdminDTO;
+import leapauth.backend.model.LeapLoginAttempt;
 import leapauth.backend.model.StatsPackVM;
 import leapauth.backend.model.SystemProperties;
 import leapauth.backend.service.StatsService;
@@ -54,6 +55,16 @@ public class AdminController {
         try {
             systemPropertiesService.setSystemProperties(systemProperties);
             return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
+    }
+
+    @GetMapping("todayLoginAttempts")
+    public ResponseEntity getTodayLoginAttempts() {
+        try {
+            List<LeapLoginAttempt> leapLoginAttempts = statsService.getTodayLoginAttempts();
+            return new ResponseEntity(leapLoginAttempts, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
         }

@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-6">
+    <app-stats></app-stats>
+  </div>
+  <div class="col-6">
+    <mat-list class="pt-5">
+      <mat-list-item *ngFor="let loginAttempt of leapLoginAttempts">
+        <div  [ngStyle]="{'color': loginAttempt.success? 'green' : 'red'}">
+          <p>{{ 'name' | translate}}: {{loginAttempt.user.name}} {{loginAttempt.user.surname}}
+            {{'time' | translate}}: {{loginAttempt.date | date:'shortTime'}}
+         {{'status' | translate}}:  {{loginAttempt.success}}
+          {{'precision' | translate}}: {{loginAttempt.gestureDifference}}
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+

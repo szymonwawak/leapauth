@@ -1,4 +1,5 @@
 {
+  "admin.dashboard": "Administrator panel",
   "ChooseUsername": "Choose your username",
   "SwipeHand": "You have to swipe your hand in order to select proper person",
   "UserCredentials": "User credentials",
@@ -42,5 +43,8 @@
   "field.required": "This field is required",
   "properties.auth.block": "Time of authentication block (min)",
   "properties.gesture.precision": "Required gesture precision",
-  "save": "Save"
+  "save": "Save",
+  "status": "Status",
+  "time": "Time:",
+  "precision": "Precision"
 }

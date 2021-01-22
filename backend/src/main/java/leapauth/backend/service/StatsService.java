@@ -98,6 +98,7 @@ public class StatsService {
     }
 
     public StatsPackVM getTotalSystemStats() {
+        if (!SecurityUtils.isCurrentUserAdmin()) throw new UnauthorizedAccessException();
         StatsVM today = getStatsByDateRange(LocalDate.now().atTime(0, 0), LocalDateTime.now());
         StatsVM week = getStatsByDateRange(LocalDate.now().minusDays(7).atStartOfDay(), LocalDateTime.now());
         StatsVM month = getStatsByDateRange(LocalDate.now().minusMonths(1).atStartOfDay(), LocalDateTime.now());
@@ -108,5 +109,10 @@ public class StatsService {
     private StatsVM getStatsByDateRange(LocalDateTime from, LocalDateTime to) {
         List<LeapLoginAttempt> leapLoginAttemptList = leapLoginAttemptRepository.getByDateBetween(from, to);
         return getStatsVMFromLoginAttemptList(leapLoginAttemptList);
+    }
+
+    public List<LeapLoginAttempt> getTodayLoginAttempts() {
+        if (!SecurityUtils.isCurrentUserAdmin()) throw new UnauthorizedAccessException();
+        return leapLoginAttemptRepository.getByDateAfter(LocalDate.now().atTime(0,0));
     }
 }

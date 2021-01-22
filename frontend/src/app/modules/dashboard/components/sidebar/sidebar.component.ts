@@ -21,6 +21,8 @@ export class SidebarComponent implements OnInit {
       path: 'stats', title: 'stats', icon: 'show_chart', class: ''
     }, {
       path: 'userList', title: 'users.list', icon: 'person_search', class: ''
+    }, {
+      path: 'adminDashboard', title: 'admin.dashboard', icon: 'admin_panel_settings', class: ''
     }
   ];
 

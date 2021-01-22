@@ -5,6 +5,7 @@ import {User} from '../../shared/models/User';
 import {StatsPackVM} from '../../shared/models/StatsPackVM';
 import {UserAdminVM} from '../../shared/models/UserAdminVM';
 import {SystemProperties} from "../../shared/models/SystemProperties";
+import {LeapLoginAttempt} from "../../shared/models/LeapLoginAttempt";
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,9 @@ export class ApiService {
 
   setSystemProperties(systemProperties: SystemProperties) {
     return this.http.post<any>(this.ADMIN_URL + 'setProperties', systemProperties);
+  }
+
+  getLeapAttempts() {
+    return this.http.get<Array<LeapLoginAttempt>>(this.ADMIN_URL + 'todayLoginAttempts');
   }
 }
