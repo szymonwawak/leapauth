@@ -6,6 +6,7 @@ import {GestureCreationComponent} from './components/gesture-creation/gesture-cr
 import {AuthGuard} from '../../core/guards/auth.guard';
 import {GestureVisualizationComponent} from './components/gesture-visualization/gesture-visualization.component';
 import {StatsComponent} from './components/stats/stats.component';
+import {UserListComponent} from './components/user-list/user-list.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
       {path: '', pathMatch: 'full', redirectTo: 'createGesture'},
       {path: 'createGesture', component: GestureCreationComponent},
       {path: 'showGesture', component: GestureVisualizationComponent},
+      {path: 'userList', component: UserListComponent},
       {path: 'stats', component: StatsComponent},
       {path: 'logout', redirectTo: '/auth/leap'},
     ]

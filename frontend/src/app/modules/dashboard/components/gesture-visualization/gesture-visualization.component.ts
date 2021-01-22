@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Injector, OnInit} from '@angular/core';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
-import {ApiService} from "../../../../core/services/api.service";
-import {UtilsService} from "../../../../core/services/utils.service";
+import {ApiService} from '../../../../core/services/api.service';
+import {UtilsService} from '../../../../core/services/utils.service';
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-gesture-visualization',
@@ -10,6 +11,7 @@ import {UtilsService} from "../../../../core/services/utils.service";
 })
 export class GestureVisualizationComponent implements OnInit {
 
+  private userId = 0;
   private controller;
   private player;
   private scene;
@@ -18,12 +20,13 @@ export class GestureVisualizationComponent implements OnInit {
 
   constructor(private elementRef: ElementRef, private apiService: ApiService,
               private leapVisualisationInitializerService: LeapVisualisationInitializerService,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService, private injector: Injector) {
   }
 
   ngOnInit(): void {
     this.initScene();
     this.initController();
+    this.userId = this.injector.get(MAT_DIALOG_DATA, 0);
   }
 
   public playback(): void {
@@ -66,7 +69,7 @@ export class GestureVisualizationComponent implements OnInit {
   }
 
   private loadGestureVisualization(): void {
-    this.apiService.getGestureVisualization(null).subscribe(
+    this.apiService.getGestureVisualization(this.userId).subscribe(
       res => {
         // const recording = this.player.recording.readFileData(JSON.stringify(res));
         this.player.setRecording(res);

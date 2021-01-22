@@ -31,7 +31,7 @@ public class StatsService {
 
     public StatsPackVM getFullUserStats(Long id) {
         User user;
-        if (id != null) {
+        if (id != null && id != 0) {
             if (!SecurityUtils.isCurrentUserAdmin()) throw new UnauthorizedAccessException();
             user = userRepository.findById(id).get();
         } else {

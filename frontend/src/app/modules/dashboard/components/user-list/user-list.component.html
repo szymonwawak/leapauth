@@ -1,0 +1,15 @@
+<div class="w-75 m-auto pt-5">
+<h2 class="text-center">{{'users.list' | translate}}</h2>
+<mat-list class="pt-5">
+  <mat-list-item *ngFor="let user of users">
+    {{user.name}} {{user.surname}}
+    <span class="spacer"></span>
+    <button type="button" mat-raised-button color="warn" class="float-right"
+            *ngIf="!user.isAdmin" (click)="addAdminAuthority(user)">{{ 'users.add.admin' | translate}}</button>
+      <button type="button" mat-raised-button color="primary" class="float-right ml-2"
+              (click)="showVisualization(user.id)">{{'users.show.visualization' | translate}}</button>
+      <button type="button" mat-raised-button color="accent" class="float-right ml-2"
+              (click)="showStats(user.id)">{{'users.show.stats' | translate}}</button>
+  </mat-list-item>
+</mat-list>
+</div>

@@ -15,14 +15,16 @@ public class LeapAuthorizationService {
 
     private GestureService gestureService;
     private StatsService statsService;
+    private SystemPropertiesService systemPropertiesService;
 
     private final int MAX_NUMBER_OF_WARPS = 40;
-    private final double MAX_GESTURE_DIFFERENCE = 1.2;
 
     @Autowired
-    public LeapAuthorizationService(GestureService gestureService, StatsService statsService) {
+    public LeapAuthorizationService(GestureService gestureService, StatsService statsService,
+                                    SystemPropertiesService systemPropertiesService) {
         this.gestureService = gestureService;
         this.statsService = statsService;
+        this.systemPropertiesService = systemPropertiesService;
     }
 
     public boolean recognizeGesture(User user, List<HandData> gestureData) {
@@ -38,7 +40,7 @@ public class LeapAuthorizationService {
             try {
                 savedGesture = gestureService.readGestureFromFile(singleGesture.getGestureData());
                 gestureDifference = dynamicTimeWarp(currentGesture, savedGesture) / userGesture.getGesturePrecision();
-                if (gestureDifference < MAX_GESTURE_DIFFERENCE) {
+                if (gestureDifference < systemPropertiesService.getSystemProperties().getGesturePrecision()) {
                     statsService.addLoginAttempt(true, gestureDifference, user);
                     return true;
                 }

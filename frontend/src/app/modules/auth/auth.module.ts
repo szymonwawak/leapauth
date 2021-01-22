@@ -11,7 +11,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
 import {FormsModule} from '@angular/forms';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {ServiceInjector, services} from '../../core/classes/service-injector';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -20,9 +20,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {LeapLiveAuthenticationComponent} from './components/leap-live-authentication/leap-live-authentication.component';
 import {RegisterComponent} from './components/register/register.component';
+import {PasswordChangeComponent} from './components/password-change/password-change.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent, LeapLiveAuthenticationComponent, RegisterComponent],
+  declarations: [AuthTemplateComponent, LeapComponent, PersonSelectComponent, LoginComponent, LeapLiveAuthenticationComponent, RegisterComponent, PasswordChangeComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -36,13 +38,8 @@ import {RegisterComponent} from './components/register/register.component';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    })
+    MatDialogModule,
+    TranslateModule
   ]
 })
 export class AuthModule {

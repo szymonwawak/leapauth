@@ -1,5 +1,6 @@
 package leapauth.backend.model;
 
+import leapauth.backend.service.SystemPropertiesService;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class LoginAttempts {
     private int counter;
     private LocalDateTime blockDate;
     private final int MAX_FAILED_ATTEMPTS = 2;
+
     public LoginAttempts() {
         this.counter = 1;
     }
@@ -17,7 +19,7 @@ public class LoginAttempts {
     public void incrementCounter() {
         this.counter++;
         if (this.counter > MAX_FAILED_ATTEMPTS) {
-            this.blockDate = LocalDateTime.now().plusMinutes(5);
+            this.blockDate = LocalDateTime.now().plusMinutes(SystemPropertiesService.getSystemProperties().getAuthBlock());
         }
     }
 

@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NavRoute} from '../../../../shared/models/NavRoute';
 import {MatDialog} from '@angular/material/dialog';
 import {PasswordChangeComponent} from '../../../auth/components/password-change/password-change.component';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
+import {ChangeSystemPropertiesComponent} from "../change-system-properties/change-system-properties.component";
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +19,8 @@ export class SidebarComponent implements OnInit {
       path: 'showGesture', title: 'gesture.show', icon: 'movie', class: ''
     }, {
       path: 'stats', title: 'stats', icon: 'show_chart', class: ''
+    }, {
+      path: 'userList', title: 'users.list', icon: 'person_search', class: ''
     }
   ];
 
@@ -29,6 +32,14 @@ export class SidebarComponent implements OnInit {
 
   showChangePasswordDialog(): void {
     this.dialog.open(PasswordChangeComponent, {
+      disableClose: true,
+      autoFocus: true,
+      width: '300px'
+    });
+  }
+
+  showChangeSystemPropertiesDialog(): void {
+    this.dialog.open(ChangeSystemPropertiesComponent, {
       disableClose: true,
       autoFocus: true,
       width: '300px'

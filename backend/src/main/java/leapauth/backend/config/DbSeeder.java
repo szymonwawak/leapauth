@@ -34,6 +34,9 @@ public class DbSeeder implements CommandLineRunner {
         authorityRepository.save(authority);
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
+        authority = new Authority();
+        authority.setName("admin");
+        authorityRepository.save(authority);
         for (int i = 1; i < 4; i++) {
             User user = new User();
             user.setName("Name" + i);
@@ -41,6 +44,7 @@ public class DbSeeder implements CommandLineRunner {
             user.setEmail("address" + i + "@test.com");
             user.setPassword(passwordEncoder.encode("password" + i));
             user.setAuthorities(authorities);
+            if (i == 3) user.addAuthority(authority);
             user.setStats(new Stats());
             userRepository.save(user);
         }

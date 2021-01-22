@@ -54,7 +54,7 @@ public class GestureService {
 
     public byte[] getVisualization(Long userId) {
         User user;
-        if (userId != null && SecurityUtils.isCurrentUserAdmin()) {
+        if (userId != null && userId != 0 && SecurityUtils.isCurrentUserAdmin()) {
             Optional<User> foundUser = userRepository.findById(userId);
             if (foundUser.isPresent()) {
                 user = foundUser.get();

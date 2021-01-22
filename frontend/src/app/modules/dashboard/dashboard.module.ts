@@ -18,10 +18,16 @@ import {GestureVisualizationComponent} from './components/gesture-visualization/
 import {StatsComponent} from './components/stats/stats.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {SharedModule} from "../../shared/shared.module";
+import {UserListComponent} from './components/user-list/user-list.component';
+import {MatButtonModule} from "@angular/material/button";
+import {ChangeSystemPropertiesComponent} from './components/change-system-properties/change-system-properties.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
-  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent],
+  declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent, GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent, ChangeSystemPropertiesComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -35,6 +41,10 @@ import {SharedModule} from "../../shared/shared.module";
     MatTabsModule,
     SharedModule,
     TranslateModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
   ]
 })
 export class DashboardModule {

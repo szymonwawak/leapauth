@@ -32,5 +32,15 @@
   "stats.total": "Total stats",
   "stats.authorizations": "Authorizations:",
   "stats.failedAuthorizations": "Failed authorizations:",
-  "stats.averageGestureDifference": "Average gesture difference ratio:"
+  "stats.averageGestureDifference": "Average gesture difference ratio:",
+  "system.change.properties": "Change system properties",
+  "users.list": "User list",
+  "users.show.visualization": "Show visualization",
+  "users.add.admin": "Add admin authority",
+  "users.show.stats": "Show stats",
+  "admin.granted": "Admin authority has been granted",
+  "field.required": "This field is required",
+  "properties.auth.block": "Time of authentication block (min)",
+  "properties.gesture.precision": "Required gesture precision",
+  "save": "Save"
 }

@@ -59,4 +59,8 @@ public class User {
     public void addLeapLoginAttempt(LeapLoginAttempt leapLoginAttempt) {
         leapLoginAttempts.add(leapLoginAttempt);
     }
+
+    public void addAuthority(Authority authority) {
+        authorities.add(authority);
+    }
 }
