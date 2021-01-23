@@ -1,4 +1,4 @@
-export class PasswordChangeModel {
+export class PasswordChangeVM {
   currentPassword: string;
   newPassword: string;
 }

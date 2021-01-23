@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
-import {UtilsService} from "../../../../core/services/utils.service";
-import {MatDialogRef} from "@angular/material/dialog";
-import {SystemProperties} from "../../../../shared/models/SystemProperties";
-import {ApiService} from "../../../../core/services/api.service";
+import {TranslateService} from '@ngx-translate/core';
+import {UtilsService} from '../../../../core/services/utils.service';
+import {MatDialogRef} from '@angular/material/dialog';
+import {SystemProperties} from '../../../../shared/models/SystemProperties';
+import {ApiService} from '../../../../core/services/api.service';
 
 @Component({
   selector: 'app-change-system-properties',

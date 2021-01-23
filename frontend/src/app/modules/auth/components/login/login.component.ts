@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth.service';
-import {LoginModel} from '../../../../shared/models/LoginModel';
+import {LoginVM} from '../../../../shared/models/LoginVM';
 import {Router} from "@angular/router";
 import {UtilsService} from "../../../../core/services/utils.service";
 
@@ -10,7 +10,7 @@ import {UtilsService} from "../../../../core/services/utils.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent  implements OnInit {
-  loginModel: LoginModel = {
+  loginModel: LoginVM = {
     email: '',
     password: ''
   };
@@ -27,7 +27,7 @@ export class LoginComponent  implements OnInit {
         const token: string = res.token;
         if (token) {
           localStorage.setItem('token', token);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard/show-gesture');
         }
       },
       err => {

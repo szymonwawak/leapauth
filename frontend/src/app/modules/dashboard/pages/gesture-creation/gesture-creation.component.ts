@@ -5,8 +5,8 @@ import {ApiService} from '../../../../core/services/api.service';
 import {JsonHelperService} from '../../../../core/services/json-helper.service';
 import {Gestures} from '../../../../shared/models/Gestures';
 import {GestureData} from '../../../../shared/models/GestureData';
-import {UtilsService} from "../../../../core/services/utils.service";
-import {TranslateService} from "@ngx-translate/core";
+import {UtilsService} from '../../../../core/services/utils.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gesture-creation',
@@ -16,7 +16,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class GestureCreationComponent implements OnInit {
 
   private gestureVisualization: Blob;
-  private gestures: Gestures;
+  private readonly gestures: Gestures;
   private step = 1;
   @ViewChild('stepper')
   private stepper: MatStepper;

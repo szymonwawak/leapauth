@@ -71,10 +71,9 @@ export class GestureVisualizationComponent implements OnInit {
   private loadGestureVisualization(): void {
     this.apiService.getGestureVisualization(this.userId).subscribe(
       res => {
-        // const recording = this.player.recording.readFileData(JSON.stringify(res));
         this.player.setRecording(res);
         const recording = this.player.recording;
-        recording.url = 'visualization.url';
+        recording.url = 'visualization.json';
         recording.readFileData(JSON.stringify(res));
         this.player.setRecording(recording).play();
       }, error => {

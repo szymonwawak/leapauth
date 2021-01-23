@@ -6,5 +6,4 @@ export class Gestures {
   constructor() {
     this.gestures = new Array<GestureData>();
   }
-
 }

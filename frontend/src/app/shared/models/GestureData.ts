@@ -6,5 +6,4 @@ export class GestureData {
   constructor() {
     this.gesture = new Array<HandData>();
   }
-
 }

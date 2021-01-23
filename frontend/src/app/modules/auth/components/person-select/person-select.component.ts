@@ -3,8 +3,8 @@ import {NavigableBase} from '../../../../core/classes/navigable-base';
 import {NavigatorConfig} from '../../../../shared/models/NavigatorConfig';
 import {User} from '../../../../shared/models/User';
 import {ApiService} from '../../../../core/services/api.service';
-import {TranslateService} from "@ngx-translate/core";
-import {UtilsService} from "../../../../core/services/utils.service";
+import {TranslateService} from '@ngx-translate/core';
+import {UtilsService} from '../../../../core/services/utils.service';
 
 
 @Component({

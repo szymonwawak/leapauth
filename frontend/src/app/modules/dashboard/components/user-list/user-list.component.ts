@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {UserAdminVM} from '../../../../shared/models/UserAdminVM';
 import {ApiService} from '../../../../core/services/api.service';
 import {UtilsService} from '../../../../core/services/utils.service';
-import {MatDialog} from "@angular/material/dialog";
-import {GestureVisualizationComponent} from "../gesture-visualization/gesture-visualization.component";
-import {StatsComponent} from "../stats/stats.component";
-import {TranslateService} from "@ngx-translate/core";
+import {MatDialog} from '@angular/material/dialog';
+import {StatsComponent} from '../stats/stats.component';
+import {TranslateService} from '@ngx-translate/core';
+import {GestureVisualizationComponent} from "../../pages/gesture-visualization/gesture-visualization.component";
 
 @Component({
   selector: 'app-user-list',

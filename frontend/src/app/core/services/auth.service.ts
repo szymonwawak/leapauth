@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {LoginModel} from '../../shared/models/LoginModel';
+import {LoginVM} from '../../shared/models/LoginVM';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {RegisterModel} from '../../shared/models/RegisterModel';
-import {LeapLoginModel} from '../../shared/models/LeapLoginModel';
-import {PasswordChangeModel} from '../../shared/models/PasswordChangeModel';
+import {RegisterVM} from '../../shared/models/RegisterVM';
+import {LeapLoginVM} from '../../shared/models/LeapLoginVM';
+import {PasswordChangeVM} from '../../shared/models/PasswordChangeVM';
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +17,19 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelperService: JwtHelperService) {
   }
 
-  login(loginModel: LoginModel) {
+  login(loginModel: LoginVM) {
     return this.http.post<any>(this.AUTH_URL + '/login', loginModel);
   }
 
-  loginWithLeap(leapLoginModel: LeapLoginModel) {
+  loginWithLeap(leapLoginModel: LeapLoginVM) {
     return this.http.post<any>(this.AUTH_URL + '/leapLogin', leapLoginModel);
   }
 
-  register(registerModel: RegisterModel) {
+  register(registerModel: RegisterVM) {
     return this.http.post<any>(this.AUTH_URL + '/register', registerModel);
   }
 
-  changePassword(passwordChangeModel: PasswordChangeModel) {
+  changePassword(passwordChangeModel: PasswordChangeVM) {
     return this.http.post<any>(this.AUTH_URL + '/changePassword', passwordChangeModel);
   }
 

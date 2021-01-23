@@ -2,7 +2,7 @@ import {Component, Injector, OnInit} from '@angular/core';
 import {StatsPackVM} from '../../../../shared/models/StatsPackVM';
 import {ApiService} from '../../../../core/services/api.service';
 import {UtilsService} from '../../../../core/services/utils.service';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-stats',

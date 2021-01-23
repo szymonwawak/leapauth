@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth.service';
-import {RegisterModel} from '../../../../shared/models/RegisterModel';
+import {RegisterVM} from '../../../../shared/models/RegisterVM';
 import {Router} from '@angular/router';
 import {UtilsService} from '../../../../core/services/utils.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class RegisterComponent implements OnInit {
 
-  registerModel: RegisterModel;
+  registerModel: RegisterVM;
 
   constructor(private authService: AuthService, private router: Router, private utilsService: UtilsService,
               private translateService: TranslateService) {

@@ -1,6 +1,6 @@
 :host {
   display: flex;
   flex-flow: column;
-  height: 100%;
+  height: calc(100% - 64px);
   background-color: rgba(98, 117, 127, 0.6);
 }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UtilsService} from '../../../../core/services/utils.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from '../../../../core/services/auth.service';
-import {PasswordChangeModel} from '../../../../shared/models/PasswordChangeModel';
+import {PasswordChangeVM} from '../../../../shared/models/PasswordChangeVM';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -12,7 +12,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class PasswordChangeComponent implements OnInit {
 
-  passwordChangeModel: PasswordChangeModel = {
+  passwordChangeModel: PasswordChangeVM = {
     currentPassword: '',
     newPassword: ''
   };

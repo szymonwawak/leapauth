@@ -13,7 +13,7 @@ import {ServiceInjector} from '../../../core/classes/service-injector';
 export class NavigatorComponent implements OnInit {
 
   public config: NavigatorConfig = {top: '', right: '', down: '', left: ''};
-  public hidden = true;
+  public hidden = false;
   private configObservable: Subject<NavigatorConfig>;
   private visibilityObservable: Subject<boolean>;
   private navigationService: NavigationService;

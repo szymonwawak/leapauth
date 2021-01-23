@@ -1,6 +1,6 @@
 import {HandData} from './HandData';
 
-export class LeapLoginModel {
+export class LeapLoginVM {
   email: string;
   gesture: Array<HandData>;
 }

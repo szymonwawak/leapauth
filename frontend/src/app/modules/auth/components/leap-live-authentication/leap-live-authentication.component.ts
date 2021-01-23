@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import * as riggedHand from '../../../../../assets/js/leap.rigged-hand-0.1.7.min';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
-import {LeapLoginModel} from "../../../../shared/models/LeapLoginModel";
+import {LeapLoginVM} from "../../../../shared/models/LeapLoginVM";
 import {FrameDataExtractorService} from "../../../../core/services/frame-data-extractor.service";
 import {AuthService} from "../../../../core/services/auth.service";
 import {HandData} from "../../../../shared/models/HandData";
@@ -78,7 +78,7 @@ export class LeapLiveAuthenticationComponent implements OnInit {
   }
 
   private authorize(): void {
-    const authModel = new LeapLoginModel();
+    const authModel = new LeapLoginVM();
     authModel.email = this.selectedUser.email;
     authModel.gesture = this.frameList;
     if (!this.isAuthRequestPending) {

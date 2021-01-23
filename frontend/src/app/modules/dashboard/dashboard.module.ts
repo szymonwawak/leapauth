@@ -12,9 +12,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxSliderModule} from '@angular-slider/ngx-slider';
-import {GestureCreationComponent} from './components/gesture-creation/gesture-creation.component';
 import {MatStepperModule} from '@angular/material/stepper';
-import {GestureVisualizationComponent} from './components/gesture-visualization/gesture-visualization.component';
 import {StatsComponent} from './components/stats/stats.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {SharedModule} from '../../shared/shared.module';
@@ -25,7 +23,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {SingleStatsComponent} from './components/single-stats/single-stats.component';
-import {AdminDashboardComponent} from './components/admin-dashboard/admin-dashboard.component';
+import {GestureCreationComponent} from './pages/gesture-creation/gesture-creation.component';
+import {GestureVisualizationComponent} from './pages/gesture-visualization/gesture-visualization.component';
+import {AdminDashboardComponent} from './pages/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({

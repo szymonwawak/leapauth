@@ -104,6 +104,7 @@ export class GestureSaveComponent implements OnInit {
     } else {
       this.player.record();
       this.isRecording = true;
+      this.croppedFrameArray = [];
       this.frameArray = [];
       this.controller.on('frame', (frame) => {
         this.registerFrameData(frame);
