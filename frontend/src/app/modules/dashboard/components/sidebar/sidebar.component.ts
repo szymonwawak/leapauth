@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
   ];
 
   constructor(private dialog: MatDialog, private translateService: TranslateService,
-              private router: Router, private authService: AuthService) {
+              private router: Router, public authService: AuthService) {
   }
 
   ngOnInit(): void {

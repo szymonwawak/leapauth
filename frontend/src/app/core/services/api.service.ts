@@ -6,6 +6,7 @@ import {StatsPackVM} from '../../shared/models/StatsPackVM';
 import {UserAdminVM} from '../../shared/models/UserAdminVM';
 import {SystemProperties} from "../../shared/models/SystemProperties";
 import {LeapLoginAttempt} from "../../shared/models/LeapLoginAttempt";
+import {Gesture} from "../../shared/models/Gesture";
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,10 @@ export class ApiService {
     return this.http.get<any>(this.GESTURE_URL + 'visualization/' + userId);
   }
 
+  getGesture(userId: number) {
+    return this.http.get<Gesture>(this.GESTURE_URL + userId);
+  }
+
   getUserStats(userId: number) {
     return this.http.get<StatsPackVM>(this.STATS_URL + userId);
   }
@@ -51,5 +56,9 @@ export class ApiService {
 
   getLeapAttempts() {
     return this.http.get<Array<LeapLoginAttempt>>(this.ADMIN_URL + 'todayLoginAttempts');
+  }
+
+  getSystemProperties() {
+    return this.http.get<SystemProperties>(this.ADMIN_URL + 'systemProperties');
   }
 }

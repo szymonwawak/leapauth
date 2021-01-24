@@ -150,4 +150,24 @@ public class GestureService {
         if (previousGesture != null)
             gestureRepository.delete(previousGesture);
     }
+
+    public Gesture get(long userId) {
+        User user;
+        Gesture gesture;
+        if (userId != 0 && SecurityUtils.isCurrentUserAdmin()) {
+            Optional<User> foundUser = userRepository.findById(userId);
+            if (foundUser.isPresent()) {
+                user = foundUser.get();
+                gesture = user.getGesture();
+            }
+            throw new RuntimeException("Couldn't find such user");
+        } else {
+            user = SecurityUtils.getCurrentUser();
+            gesture = user.getGesture();
+        }
+        if (gesture != null) {
+            return gesture;
+        }
+        throw new RuntimeException("Gesture doesn't exist");
+    }
 }

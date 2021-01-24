@@ -19,6 +19,7 @@ export class ChangeSystemPropertiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadProperties();
   }
 
   setProperties(): void {
@@ -30,6 +31,16 @@ export class ChangeSystemPropertiesComponent implements OnInit {
       err => {
         this.utilsService.openSnackBar(err.error);
       });
+  }
+
+  loadProperties(): void {
+    this.apiService.getSystemProperties().subscribe(
+      res => {
+        if (res) {
+          this.systemProperties = res;
+        }
+      }
+    );
   }
 
   closeDialog(): void {

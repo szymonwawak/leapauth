@@ -64,6 +64,15 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/systemProperties")
+    public ResponseEntity getSystemProperties() {
+        try {
+            return new ResponseEntity(SystemPropertiesService.getSystemProperties(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
+    }
+
     @GetMapping("todayLoginAttempts")
     public ResponseEntity getTodayLoginAttempts() {
         try {

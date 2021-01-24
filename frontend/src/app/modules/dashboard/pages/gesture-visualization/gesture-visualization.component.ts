@@ -17,6 +17,7 @@ export class GestureVisualizationComponent implements OnInit {
   private scene;
   private renderer;
   private camera;
+  precision = 0;
 
   constructor(private elementRef: ElementRef, private apiService: ApiService,
               private leapVisualisationInitializerService: LeapVisualisationInitializerService,
@@ -37,6 +38,7 @@ export class GestureVisualizationComponent implements OnInit {
     this.controller = new Leap.Controller();
     this.initLeapPlugins();
     this.loadGestureVisualization();
+    this.loadGesture();
   }
 
   private initLeapPlugins() {
@@ -76,6 +78,14 @@ export class GestureVisualizationComponent implements OnInit {
         recording.url = 'visualization.json';
         recording.readFileData(JSON.stringify(res));
         this.player.setRecording(recording).play();
+      }
+    );
+  }
+
+  private loadGesture(): void {
+    this.apiService.getGesture(this.userId).subscribe(
+      res => {
+        this.precision = res.gesturePrecision;
       }, error => {
         this.utilsService.openSnackBar(error.error.message);
       }
