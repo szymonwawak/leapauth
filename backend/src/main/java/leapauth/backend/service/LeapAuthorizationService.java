@@ -15,16 +15,13 @@ public class LeapAuthorizationService {
 
     private GestureService gestureService;
     private StatsService statsService;
-    private SystemPropertiesService systemPropertiesService;
 
     private final int MAX_NUMBER_OF_WARPS = 40;
 
     @Autowired
-    public LeapAuthorizationService(GestureService gestureService, StatsService statsService,
-                                    SystemPropertiesService systemPropertiesService) {
+    public LeapAuthorizationService(GestureService gestureService, StatsService statsService) {
         this.gestureService = gestureService;
         this.statsService = statsService;
-        this.systemPropertiesService = systemPropertiesService;
     }
 
     public boolean recognizeGesture(User user, List<HandData> gestureData) {

@@ -2,7 +2,6 @@ package leapauth.backend.controller;
 
 import leapauth.backend.dto.UserAdminDTO;
 import leapauth.backend.model.LeapLoginAttempt;
-import leapauth.backend.model.StatsPackVM;
 import leapauth.backend.model.SystemProperties;
 import leapauth.backend.service.StatsService;
 import leapauth.backend.service.SystemPropertiesService;
@@ -35,8 +34,12 @@ public class AdminController {
     }
 
     @GetMapping("/totalSystemStats")
-    public StatsPackVM getTotalSystemStats() {
-        return statsService.getTotalSystemStats();
+    public ResponseEntity getTotalSystemStats() {
+        try {
+            return new ResponseEntity(statsService.getTotalSystemStats(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 
     @GetMapping("/users")

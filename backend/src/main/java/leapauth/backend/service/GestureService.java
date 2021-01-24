@@ -139,7 +139,7 @@ public class GestureService {
                 List<Double[]> firstGesture = readGestureFromFile(gestures.get(i).getGestureData());
                 List<Double[]> secondGesture = readGestureFromFile(gestures.get(j).getGestureData());
                 double dtw = leapAuthorizationService.dynamicTimeWarp(firstGesture, secondGesture);
-                precision = dtw > precision ? dtw : precision;
+                precision = Math.max(dtw, precision);
             }
         }
         gesture.setGesturePrecision(precision);
@@ -159,8 +159,9 @@ public class GestureService {
             if (foundUser.isPresent()) {
                 user = foundUser.get();
                 gesture = user.getGesture();
+            } else {
+                throw new RuntimeException("Couldn't find such user");
             }
-            throw new RuntimeException("Couldn't find such user");
         } else {
             user = SecurityUtils.getCurrentUser();
             gesture = user.getGesture();

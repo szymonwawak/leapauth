@@ -1,5 +1,6 @@
 package leapauth.backend.controller;
 
+import leapauth.backend.model.Gesture;
 import leapauth.backend.model.GesturesVM;
 import leapauth.backend.service.GestureService;
 import leapauth.backend.util.MapperUtils;
@@ -34,11 +35,19 @@ public class GestureController {
 
     @GetMapping("/visualization/{userId}")
     public ResponseEntity getVisualization(Long userId) {
-        return new ResponseEntity<>(gestureService.getVisualization(userId), HttpStatus.OK);
+        try {
+            return new ResponseEntity(gestureService.getVisualization(userId), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity getGesture(@PathVariable Long userId) {
-        return new ResponseEntity<>(gestureService.get(userId), HttpStatus.OK);
+    public ResponseEntity<Gesture> getGesture(@PathVariable Long userId) {
+        try {
+            return new ResponseEntity(gestureService.get(userId), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 }

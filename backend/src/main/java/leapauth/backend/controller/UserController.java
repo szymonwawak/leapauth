@@ -1,12 +1,11 @@
 package leapauth.backend.controller;
 
-import leapauth.backend.dto.UserDTO;
 import leapauth.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -19,7 +18,11 @@ public class UserController {
     }
 
     @GetMapping("/public/users")
-    public List<UserDTO> getAll() {
-        return userService.getAll();
+    public ResponseEntity getAll() {
+        try {
+            return new ResponseEntity(userService.getAll(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 }

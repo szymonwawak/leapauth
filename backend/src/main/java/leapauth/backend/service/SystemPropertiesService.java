@@ -36,7 +36,7 @@ public class SystemPropertiesService {
         if (systemProperties == null)
             systemProperties = new SystemProperties();
         systemProperties.setId(systemProperties.getId());
-        this.systemProperties = systemProperties;
+        SystemPropertiesService.systemProperties = systemProperties;
         systemPropertiesRepository.save(systemProperties);
     }
 }
