@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.apiService.getUsersForAdmin().subscribe(
+    this.apiService.getUsersForAdminPanel().subscribe(
       res => this.users = res,
       error => {
         this.utilsService.openSnackBar(error.error.message);

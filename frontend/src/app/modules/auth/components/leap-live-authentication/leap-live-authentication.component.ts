@@ -26,7 +26,7 @@ export class LeapLiveAuthenticationComponent implements OnInit {
   @Input()
   private selectedUser: User;
   readonly FRAME_SEND_INTERVAL = 2;
-  private RECORDING_LENGTH = 240;
+  private RECORDING_LENGTH = 480;
 
   constructor(private elementRef: ElementRef, private authService: AuthService,
               private leapVisualisationInitializerService: LeapVisualisationInitializerService,

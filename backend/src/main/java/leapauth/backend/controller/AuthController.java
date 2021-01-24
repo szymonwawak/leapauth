@@ -62,10 +62,10 @@ public class AuthController {
 
     @Data
     static class JWTToken {
-        private String idToken;
+        private String token;
 
-        JWTToken(String idToken) {
-            this.idToken = idToken;
+        JWTToken(String token) {
+            this.token = token;
         }
     }
 }

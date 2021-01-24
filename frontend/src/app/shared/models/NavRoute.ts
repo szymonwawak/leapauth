@@ -3,4 +3,5 @@ export class NavRoute {
   title: string;
   icon: string;
   class: string;
+  role: string;
 }

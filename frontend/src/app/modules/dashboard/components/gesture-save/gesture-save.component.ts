@@ -23,7 +23,7 @@ export class GestureSaveComponent implements OnInit {
   private scene;
   private renderer;
   private camera;
-  private MAX_GESTURE_LENGTH = 240;
+  private MAX_GESTURE_LENGTH = 480;
   @Output()
   gestureHolder = new EventEmitter<Array<HandData>>();
 
@@ -134,10 +134,10 @@ export class GestureSaveComponent implements OnInit {
       return false;
     });
     if (filteredArray.length === 0) {
-      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.missing'))
+      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.missing'));
       return;
-    } else if (this.croppedFrameArray.length > this.MAX_GESTURE_LENGTH) {
-      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.too.large'))
+    } else if (filteredArray.length > this.MAX_GESTURE_LENGTH) {
+      this.utilsService.openSnackBar(this.translateService.instant('gesture.save.too.large'));
       return;
     }
     this.gestureHolder.emit(filteredArray);

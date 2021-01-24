@@ -40,7 +40,7 @@ public class LeapAuthorizationService {
             try {
                 savedGesture = gestureService.readGestureFromFile(singleGesture.getGestureData());
                 gestureDifference = dynamicTimeWarp(currentGesture, savedGesture) / userGesture.getGesturePrecision();
-                if (gestureDifference < systemPropertiesService.getSystemProperties().getGesturePrecision()) {
+                if (gestureDifference < SystemPropertiesService.getSystemProperties().getGesturePrecision()) {
                     statsService.addLoginAttempt(true, gestureDifference, user);
                     return true;
                 }

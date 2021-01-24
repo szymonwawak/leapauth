@@ -8,6 +8,7 @@ import {UserListComponent} from './components/user-list/user-list.component';
 import {GestureCreationComponent} from './pages/gesture-creation/gesture-creation.component';
 import {GestureVisualizationComponent} from './pages/gesture-visualization/gesture-visualization.component';
 import {AdminDashboardComponent} from './pages/admin-dashboard/admin-dashboard.component';
+import {AdminGuard} from '../../core/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -15,8 +16,8 @@ const routes: Routes = [
       {path: '', pathMatch: 'full', redirectTo: 'createGesture'},
       {path: 'createGesture', component: GestureCreationComponent},
       {path: 'show-gesture', component: GestureVisualizationComponent},
-      {path: 'userList', component: UserListComponent},
-      {path: 'adminDashboard', component: AdminDashboardComponent},
+      {path: 'userList', component: UserListComponent, canActivate: [AdminGuard]},
+      {path: 'adminDashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
       {path: 'stats', component: StatsComponent},
       {path: 'logout', redirectTo: '/auth/leap'},
     ]

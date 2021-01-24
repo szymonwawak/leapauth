@@ -33,7 +33,7 @@ public class SystemPropertiesService {
 
     public void setSystemProperties(SystemProperties systemProperties) {
         if (!SecurityUtils.isCurrentUserAdmin()) throw new UnauthorizedAccessException();
-        if (systemProperties != null)
+        if (systemProperties == null)
             systemProperties = new SystemProperties();
         systemProperties.setId(systemProperties.getId());
         this.systemProperties = systemProperties;

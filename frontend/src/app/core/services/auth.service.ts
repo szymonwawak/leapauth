@@ -38,6 +38,16 @@ export class AuthService {
     return !this.jwtHelperService.isTokenExpired(token);
   }
 
+  isAdmin() {
+    const token = this.getJwtToken();
+    return this.jwtHelperService.decodeToken(token).auth.includes('admin');
+  }
+
+  hasRole(role: string) {
+    const token = this.getJwtToken();
+    return this.jwtHelperService.decodeToken(token).auth.includes(role);
+  }
+
   getJwtToken() {
     return localStorage.getItem('token');
   }

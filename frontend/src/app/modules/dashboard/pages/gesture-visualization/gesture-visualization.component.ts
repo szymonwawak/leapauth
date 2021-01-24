@@ -2,7 +2,7 @@ import {Component, ElementRef, Injector, OnInit} from '@angular/core';
 import {LeapVisualisationInitializerService} from '../../../../core/services/leap-visualisation-initializer.service';
 import {ApiService} from '../../../../core/services/api.service';
 import {UtilsService} from '../../../../core/services/utils.service';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gesture-visualization',

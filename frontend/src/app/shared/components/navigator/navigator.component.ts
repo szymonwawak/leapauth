@@ -48,6 +48,7 @@ export class NavigatorComponent implements OnInit {
   private initNavigationService(): void {
     this.configObservable.subscribe((config) => {
       this.config = config;
+      this.initController();
     });
     this.visibilityObservable.subscribe((hidden) => {
       this.hidden = hidden;

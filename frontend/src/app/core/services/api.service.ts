@@ -12,17 +12,17 @@ import {LeapLoginAttempt} from "../../shared/models/LeapLoginAttempt";
 })
 export class ApiService {
 
-  private BASE_URL = 'http://localhost:8080';
-  private USERS_URL = this.BASE_URL + '/users/';
+  private URL = 'http://localhost:8080/';
+  private BASE_URL = this.URL + 'api';
   private GESTURE_URL = this.BASE_URL + '/gestures/';
   private STATS_URL = this.BASE_URL + '/stats/';
-  private ADMIN_URL = this.BASE_URL + '/api/admin/';
+  private ADMIN_URL = this.BASE_URL + '/admin/';
 
   constructor(private http: HttpClient) {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.USERS_URL);
+    return this.http.get<User[]>(this.URL + 'public/users');
   }
 
   saveUserGestures(gesturesData): Observable<any> {
@@ -37,7 +37,7 @@ export class ApiService {
     return this.http.get<StatsPackVM>(this.STATS_URL + userId);
   }
 
-  getUsersForAdmin() {
+  getUsersForAdminPanel() {
     return this.http.get<Array<UserAdminVM>>(this.ADMIN_URL + 'users');
   }
 

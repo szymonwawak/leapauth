@@ -10,8 +10,8 @@ import {UtilsService} from '../../../../core/services/utils.service';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  leapLoginAttempts: Array<LeapLoginAttempt>;
-
+  leapLoginAttempts: Array<LeapLoginAttempt> = new Array<LeapLoginAttempt>();
+  displayedColumns: string[] = ['name', 'surname', 'time', 'status', 'precision'];
   constructor(private apiService: ApiService, private utilsService: UtilsService) {
   }
 

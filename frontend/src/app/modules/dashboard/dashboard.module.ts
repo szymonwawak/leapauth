@@ -26,30 +26,32 @@ import {SingleStatsComponent} from './components/single-stats/single-stats.compo
 import {GestureCreationComponent} from './pages/gesture-creation/gesture-creation.component';
 import {GestureVisualizationComponent} from './pages/gesture-visualization/gesture-visualization.component';
 import {AdminDashboardComponent} from './pages/admin-dashboard/admin-dashboard.component';
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
   declarations: [DashboardTemplateComponent, GestureSaveComponent, SidebarComponent,
     GestureCreationComponent, GestureVisualizationComponent, StatsComponent, UserListComponent,
     ChangeSystemPropertiesComponent, AdminDashboardComponent, SingleStatsComponent],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MatSidenavModule,
-    MatMenuModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonToggleModule,
-    NgxSliderModule,
-    MatStepperModule,
-    MatTabsModule,
-    SharedModule,
-    TranslateModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-  ]
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MatSidenavModule,
+        MatMenuModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonToggleModule,
+        NgxSliderModule,
+        MatStepperModule,
+        MatTabsModule,
+        SharedModule,
+        TranslateModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatTableModule,
+    ]
 })
 export class DashboardModule {
   constructor(translateService: TranslateService) {

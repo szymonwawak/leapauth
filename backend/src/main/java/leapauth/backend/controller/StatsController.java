@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/stats")
+@RequestMapping("/api/stats")
 public class StatsController {
 
     private StatsService statsService;

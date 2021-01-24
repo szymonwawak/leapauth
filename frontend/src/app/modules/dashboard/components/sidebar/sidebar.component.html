@@ -2,19 +2,19 @@
   <img src="assets/img/logo.png" class="logo">
 </div>
 <mat-nav-list>
-  <a mat-list-item routerLink="{{route.path}}" *ngFor="let route of ROUTES">
+  <a mat-list-item routerLink="{{route.path}}" *ngFor="let route of ROUTES" [hidden]="!authService.hasRole(route.role)">
     <mat-icon>{{route.icon}}</mat-icon>
     {{route.title | translate }}
   </a>
-  <a mat-list-item (click)="showChangePasswordDialog()">
+  <a mat-list-item (click)="showChangePasswordDialog()" [hidden]="!authService.hasRole('user')">
     <mat-icon>vpn_key</mat-icon>
     {{'password.change' | translate }}
   </a>
-  <a mat-list-item (click)="showChangeSystemPropertiesDialog()">
+  <a mat-list-item (click)="showChangeSystemPropertiesDialog()" [hidden]="!authService.isAdmin()">
     <mat-icon>settings</mat-icon>
     {{'system.change.properties' | translate }}
   </a>
-  <a mat-list-item routerLink="/auth/leap" (click)="logout()">
+  <a mat-list-item (click)="logout()">
     <mat-icon>exit_to_app</mat-icon>
     {{'logout' | translate }}
   </a>

@@ -24,11 +24,11 @@ export class ChangeSystemPropertiesComponent implements OnInit {
   setProperties(): void {
     this.apiService.setSystemProperties(this.systemProperties).subscribe(
       res => {
-        this.utilsService.openSnackBar(this.translateService.instant('password.change.success'));
+        this.utilsService.openSnackBar(this.translateService.instant('system.change.properties.success'));
         this.closeDialog();
       },
       err => {
-        this.utilsService.openSnackBar(this.translateService.instant('password.change.failed'));
+        this.utilsService.openSnackBar(err.error);
       });
   }
 
