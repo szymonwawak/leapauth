@@ -28,7 +28,7 @@ public class Gesture {
     private byte[] visualisation;
 
     @Getter(onMethod_ = @__(@JsonIgnore))
-    @OneToOne(mappedBy = "gesture", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "gesture")
     private User user;
 
     public void addSingleGesture(SingleGesture gesture) {

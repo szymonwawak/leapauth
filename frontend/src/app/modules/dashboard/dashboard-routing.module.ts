@@ -13,11 +13,11 @@ import {AdminGuard} from '../../core/guards/admin.guard';
 const routes: Routes = [
   {
     path: '', component: DashboardTemplateComponent, canActivate: [AuthGuard], children: [
-      {path: '', pathMatch: 'full', redirectTo: 'createGesture'},
-      {path: 'createGesture', component: GestureCreationComponent},
+      {path: '', pathMatch: 'full', redirectTo: 'show-gesture'},
+      {path: 'create-gesture', component: GestureCreationComponent},
       {path: 'show-gesture', component: GestureVisualizationComponent},
-      {path: 'userList', component: UserListComponent, canActivate: [AdminGuard]},
-      {path: 'adminDashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+      {path: 'user-list', component: UserListComponent, canActivate: [AdminGuard]},
+      {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
       {path: 'stats', component: StatsComponent},
       {path: 'logout', redirectTo: '/auth/leap'},
     ]

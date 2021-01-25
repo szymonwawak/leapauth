@@ -78,7 +78,7 @@ export class GestureVisualizationComponent implements OnInit {
         recording.url = 'visualization.json';
         recording.readFileData(JSON.stringify(res));
         this.player.setRecording(recording).play();
-      }
+      }, error => {}
     );
   }
 

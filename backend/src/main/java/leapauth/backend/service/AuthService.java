@@ -1,9 +1,6 @@
 package leapauth.backend.service;
 
-import leapauth.backend.model.LeapLoginModel;
-import leapauth.backend.model.LoginAttempts;
-import leapauth.backend.model.LoginModel;
-import leapauth.backend.model.User;
+import leapauth.backend.model.*;
 import leapauth.backend.repository.UserRepository;
 import leapauth.backend.security.TokenProvider;
 import leapauth.backend.service.exception.AuthorizationErrorException;
@@ -55,7 +52,7 @@ public class AuthService {
         String email = user.getEmail();
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(user.getAuthorities()
                 .stream()
-                .map(Object::toString)
+                .map(Authority::getName)
                 .collect(Collectors.joining(",")));
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 email,

@@ -135,7 +135,7 @@ public class GestureService {
         int size = gestures.size();
         double precision = 0;
         for (int i = 0; i < size; i++) {
-            for (int j = i; j < size; j++) {
+            for (int j = i + 1; j < size; j++) {
                 List<Double[]> firstGesture = readGestureFromFile(gestures.get(i).getGestureData());
                 List<Double[]> secondGesture = readGestureFromFile(gestures.get(j).getGestureData());
                 double dtw = leapAuthorizationService.dynamicTimeWarp(firstGesture, secondGesture);
