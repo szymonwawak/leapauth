@@ -42,6 +42,10 @@ export class ApiService {
     return this.http.get<StatsPackVM>(this.STATS_URL + userId);
   }
 
+  getTotalStats() {
+    return this.http.get<StatsPackVM>(this.ADMIN_URL + 'totalSystemStats');
+  }
+
   getUsersForAdminPanel() {
     return this.http.get<Array<UserAdminVM>>(this.ADMIN_URL + 'users');
   }

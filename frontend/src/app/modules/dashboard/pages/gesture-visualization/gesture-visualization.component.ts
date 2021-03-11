@@ -25,9 +25,9 @@ export class GestureVisualizationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = this.injector.get(MAT_DIALOG_DATA, 0);
     this.initScene();
     this.initController();
-    this.userId = this.injector.get(MAT_DIALOG_DATA, 0);
   }
 
   public playback(): void {

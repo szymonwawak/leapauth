@@ -28,7 +28,7 @@ public class DbSeeder implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Authority authority = new Authority();
         authority.setName("user");
         authorityRepository.save(authority);
@@ -37,16 +37,22 @@ public class DbSeeder implements CommandLineRunner {
         authority = new Authority();
         authority.setName("admin");
         authorityRepository.save(authority);
-        for (int i = 1; i < 4; i++) {
-            User user = new User();
-            user.setName("Name" + i);
-            user.setSurname("Surname" + i);
-            user.setEmail("address" + i + "@test.com");
-            user.setPassword(passwordEncoder.encode("password" + i));
-            user.setAuthorities(authorities);
-            if (i == 3) user.addAuthority(authority);
-            user.setStats(new Stats());
-            userRepository.save(user);
-        }
+        User user = new User();
+        user.setName("Jan");
+        user.setSurname("Kowalski");
+        user.setEmail("jan.kowalski@test.com");
+        user.setPassword(passwordEncoder.encode("password1"));
+        user.setAuthorities(authorities);
+        user.setStats(new Stats());
+        userRepository.save(user);
+        user = new User();
+        user.setName("Adam");
+        user.setSurname("Nowak");
+        user.setEmail("adam.nowak@test.com");
+        user.setPassword(passwordEncoder.encode("password2"));
+        user.setAuthorities(authorities);
+        user.addAuthority(authority);
+        user.setStats(new Stats());
+        userRepository.save(user);
     }
 }

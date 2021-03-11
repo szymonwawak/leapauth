@@ -16,5 +16,6 @@ export class AuthTemplateComponent implements OnInit {
 
   changeLanguage(lang: string) {
     this.translateService.use(lang);
+    localStorage.setItem('lang', lang);
   }
 }

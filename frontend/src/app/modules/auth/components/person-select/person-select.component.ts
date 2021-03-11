@@ -33,8 +33,10 @@ export class PersonSelectComponent extends NavigableBase implements OnInit, OnDe
     this.translateService.get('user.previous').subscribe(
       res => {
         this.navConfig = {
-          top: res,
-          down: this.translateService.instant('user.next'), left: '', right: this.translateService.instant('authorize')
+          top: this.translateService.instant('user.previous'),
+          down: this.translateService.instant('user.next'),
+          left: '',
+          right: this.translateService.instant('authorize')
         };
         this.initNavigator(this.navConfig);
         this.loadUsers();

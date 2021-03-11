@@ -34,7 +34,7 @@ public class GestureController {
     }
 
     @GetMapping("/visualization/{userId}")
-    public ResponseEntity getVisualization(Long userId) {
+    public ResponseEntity getVisualization(@PathVariable Long userId) {
         try {
             return new ResponseEntity(gestureService.getVisualization(userId), HttpStatus.OK);
         } catch (Exception ex) {

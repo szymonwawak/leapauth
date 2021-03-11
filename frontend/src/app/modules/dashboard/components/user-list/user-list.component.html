@@ -2,7 +2,7 @@
 <h2 class="text-center">{{'users.list' | translate}}</h2>
 <mat-list class="pt-5">
   <mat-list-item *ngFor="let user of users">
-    {{user.name}} {{user.surname}} <span class="pl-5">{{user.email}}</span>
+    <div class="pr-5 list-spacer">{{user.name}} {{user.surname}}</div> <span class="pl-5 pr-3">{{user.email}}</span>
     <span class="spacer"></span>
     <button type="button" mat-raised-button color="warn" class="float-right"
             *ngIf="!user.isAdmin" (click)="addAdminAuthority(user)">{{ 'users.add.admin' | translate}}</button>
